@@ -150,9 +150,8 @@ Shellmarks should run on any modern Windows, Linux, or Mac system.
 
 ## Documentation
 
-- Getting Started Guide
-- Command-line Options
+- [CLI Usage](https://github.com/shannah/shellmarks/wiki/CLI-Usage)
 - [GUI Form Configuration](https://github.com/shannah/shellmarks/wiki/Shellmarks-GUI-Form-Configuration)
-- Sample Scripts
+- [Sample Scripts](sample-scripts)
 
 
