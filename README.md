@@ -1,5 +1,5 @@
 # Shellmarks
-Simple GUI Wrappers for Shell Scripts
+Provide a GUI dialog for a shell script
 
 ## Synopsis
 
