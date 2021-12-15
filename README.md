@@ -152,7 +152,7 @@ Shellmarks should run on any modern Windows, Linux, or Mac system.
 
 - Getting Started Guide
 - Command-line Options
-- GUI Form Options
+- [GUI Form Configuration](https://github.com/shannah/shellmarks/wiki/Shellmarks-GUI-Form-Configuration)
 - Sample Scripts
 
 
