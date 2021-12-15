@@ -581,14 +581,13 @@ public class Main implements Runnable {
                 return buildFileField(field);
 
             case Text:
-                return buildTextField(field);
-
             case Number:
-                return buildNumberField(field);
-            case CheckBox:
-                return buildCheckboxField(field);
             case Date:
                 return buildTextField(field);
+
+            case CheckBox:
+                return buildCheckboxField(field);
+
 
 
         }
@@ -630,6 +629,22 @@ public class Main implements Runnable {
             pathField.setToolTipText(field.help);
             label.setToolTipText(field.help);
         }
+        pathField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                environment.put(field.varName, pathField.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                environment.put(field.varName, pathField.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                environment.put(field.varName, pathField.getText());
+            }
+        });
         installValidation(pathField, field);
         pathField.setColumns(30);
         pathField.putClientProperty(FIELD_KEY, field);
@@ -640,6 +655,7 @@ public class Main implements Runnable {
         pathField.addActionListener(evt->{
             environment.put(field.varName, pathField.getText());
         });
+
 
         JButton browseButton = new JButton("...");
         browseButton.addActionListener(evt->{
@@ -665,33 +681,7 @@ public class Main implements Runnable {
         return panel;
     }
 
-    private JComponent buildNumberField(Field field) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JLabel label = new JLabel(field.label);
-        JPanel labelWrapper = new JPanel();
-        labelWrapper.setLayout(new FlowLayout(FlowLayout.LEFT));
-        labelWrapper.add(label);
-        panel.add(labelWrapper);
 
-        JTextField pathField = new JTextField();
-        installValidation(pathField, field);
-        pathField.putClientProperty(FIELD_KEY, field);
-        if (field.defaultValue != null) {
-            pathField.setText(field.defaultValue);
-            environment.put(field.varName, field.defaultValue);
-        }
-        if (field.help != null) {
-            pathField.setToolTipText(field.help);
-            label.setToolTipText(field.help);
-        }
-        pathField.addActionListener(evt->{
-            environment.put(field.varName, pathField.getText());
-        });
-        panel.add(pathField);
-
-        return panel;
-    }
 
     private JComponent buildCheckboxField(Field field) {
 
