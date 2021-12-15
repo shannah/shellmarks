@@ -1,0 +1,15 @@
+{
+  "bin": {"shellmarks": "jdeploy-bundle/jdeploy.js"},
+  "author": "Steve Hannah",
+  "description": "Runs shell scripts with GUI for setting required environment variables.",
+  "main": "index.js",
+  "preferGlobal": true,
+  "repository": "",
+  "version": "1.0.5",
+  "jdeploy": {"jar": "target/shellmarks-cli-1.0-SNAPSHOT.jar"},
+  "dependencies": {"shelljs": "^0.8.4", "njre": "^0.2.0"},
+  "license": "ISC",
+  "name": "shellmarks",
+  "files": ["jdeploy-bundle", "!jdeploy-bundle/jre"],
+  "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
+}
