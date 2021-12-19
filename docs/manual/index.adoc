@@ -122,7 +122,35 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 
 image::images/hello-dialog-3.png[]
 
+=== File Selection
 
+It is quite common to take a file or directory as input in a shell script.  For example, let's add some output in our script that displays the word count for a file.  We can use the `type="file"` in the field description to allow the user to select a file or directory.
 
+[source,bash]
+----
+#!/bin/bash
+echo "Hello ${name}"
+wordcount=$(wc "${file}")
+echo "Word count in ${file} is ${wordcount}"
+exit 0
+---
+__title__="Hello World"
+__description__='''
+This example shows you how to add some help text to the top of the dialog.
 
+This content is in Asciidoc format, and supports markup such as https://www.example.com[links].
+'''
+
+[name]
+  label="Enter your name"
+  help="This will be displayed in a tooltip"
+  required=true
+  default="Jimbo"
+
+[file]
+  type="file"
+  label="Please select a file"
+  help="The word count for the selected file will be output"
+  required=true
+----
 

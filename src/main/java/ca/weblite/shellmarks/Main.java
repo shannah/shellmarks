@@ -458,6 +458,7 @@ public class Main implements Runnable {
         String label, help;
         FieldType type;
         String defaultValue;
+        int order;
     }
 
     private enum FieldType {
@@ -497,9 +498,19 @@ public class Main implements Runnable {
         }
 
         if (tomlString.trim().isEmpty()) return false;
+        List<String> fieldOrders = new ArrayList<String>();
+        Scanner scanner = new Scanner(tomlString);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            if (line.trim().matches("^\\[[A-Za-z].*\\]$")) {
+                fieldOrders.add(line.substring(line.indexOf("[")+1, line.lastIndexOf("]")));
+            }
+        }
+
 
         Toml toml = new Toml().read(tomlString);
         form = new Form();
+
 
         for (Map.Entry<String,Object> entry : toml.entrySet()) {
             if (entry.getKey().equalsIgnoreCase("__title__")) {
@@ -519,6 +530,7 @@ public class Main implements Runnable {
                 field.varName = entry.getKey();
                 field.label = value.getString("label", field.varName);
                 field.help = value.getString("help", null);
+                field.order = fieldOrders.indexOf(field.varName);
                 String typestr = value.getString("type", "Text").toLowerCase();
                 switch (typestr) {
                     case "file":
@@ -541,6 +553,9 @@ public class Main implements Runnable {
             }
 
         }
+        Collections.sort(form.fields, (f1, f2) -> {
+            return f1.order - f2.order;
+        });
         return true;
     }
 
