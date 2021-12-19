@@ -1,9 +1,9 @@
 # Shellmarks
-Simple GUI Wrappers for Shell Scripts
+Provide a GUI dialog for a shell script
 
 ## Synopsis
 
-Shellmarks is a shell script wrapper that allows you to set environment variables via a GUI form prior to the script's execution.
+Shellmarks is a shell script wrapper that allows you to set environment variables via a GUI dialog prior to the script's execution.
 
 The GUI form is defined using [TOML](https://toml.io/en/) inside the shell script.  If the shell script is run using `shellmarks`, it will first check for such a form definition in the script, and display it to the user.  The user then fills in the form, and presses "Run".  It then runs the script using the script's desired interpreter (as specified by its `#!`) with the user's input in the script's environment.
 
