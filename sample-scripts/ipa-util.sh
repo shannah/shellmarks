@@ -20,15 +20,14 @@ if [ ! -z "$showProvisioningProfile" ]; then
     security cms -D -i "Payload/${appname}/embedded.mobileprovision"
 fi
 exit 0
-<shellmarks>
-title="IPA Entitlements"
-description='''
-<asciidoc>
+__title__="IPA Entitlements"
+__description__='''
 This script will print out the entitlements and provisioning profile for given .ipa file.
 
 See https://developer.apple.com/library/archive/qa/qa1798/_index.html[Apple Tech Article] for more information.
-</asciidoc>
 '''
+__tags__="#ios"
+
 [file]
     type="file"
     label="Select ipa file"
@@ -47,4 +46,3 @@ See https://developer.apple.com/library/archive/qa/qa1798/_index.html[Apple Tech
     default="true"
     help="Check this to show the ipa provisioning profile details."
 
-</shellmarks>

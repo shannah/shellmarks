@@ -455,11 +455,11 @@ __tags__="#custom-tag1 #custom-tag2"
 
 Shellmarks stores all scripts in the `$HOME/.shellmarks/scripts` directory, where `$HOME` refers to the user's home directory.
 
-This location can be overridden via the `SHELLMARKS_HOME` environment variable, whose default value is `$HOME/.shellmarks`.
+This location can be overridden via the `SHELLMARKS_PATH` environment variable, whose default value is `$HOME/.shellmarks/scripts`.
 
 === Can I run multiple shellmarks instances with different catalogs?
 
-Yes, by launching different instances of shellmarks with different values for the `SHELLMARKS_HOME` environment variable.
+Yes, by launching different instances of shellmarks with different values for the `SHELLMARKS_PATH` environment variable.
 
 E.g.
 
@@ -467,7 +467,7 @@ E.g.
 ----
 shellmarks #launch with default catalog
 
-SHELLMARKS_HOME=/tmp/temp_catalog shellmarks  #launch with scripts in /tmp/temp_catalog/scripts
+SHELLMARKS_PATH=/tmp/temp_catalog shellmarks  #launch with scripts in /tmp/temp_catalog
 ----
 
 === Can I organize my scripts into categories?

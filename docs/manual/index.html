@@ -1148,13 +1148,13 @@ __tags__="#custom-tag1 #custom-tag2"
 <p>Shellmarks stores all scripts in the <code>$HOME/.shellmarks/scripts</code> directory, where <code>$HOME</code> refers to the user&#8217;s home directory.</p>
 </div>
 <div class="paragraph">
-<p>This location can be overridden via the <code>SHELLMARKS_HOME</code> environment variable, whose default value is <code>$HOME/.shellmarks</code>.</p>
+<p>This location can be overridden via the <code>SHELLMARKS_PATH</code> environment variable, whose default value is <code>$HOME/.shellmarks/scripts</code>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_can_i_run_multiple_shellmarks_instances_with_different_catalogs">5.2. Can I run multiple shellmarks instances with different catalogs?</h3>
 <div class="paragraph">
-<p>Yes, by launching different instances of shellmarks with different values for the <code>SHELLMARKS_HOME</code> environment variable.</p>
+<p>Yes, by launching different instances of shellmarks with different values for the <code>SHELLMARKS_PATH</code> environment variable.</p>
 </div>
 <div class="paragraph">
 <p>E.g.</p>
@@ -1163,7 +1163,7 @@ __tags__="#custom-tag1 #custom-tag2"
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">shellmarks #launch with default catalog
 
-SHELLMARKS_HOME=/tmp/temp_catalog shellmarks  #launch with scripts in /tmp/temp_catalog/scripts</code></pre>
+SHELLMARKS_PATH=/tmp/temp_catalog shellmarks  #launch with scripts in /tmp/temp_catalog</code></pre>
 </div>
 </div>
 </div>
@@ -1584,7 +1584,7 @@ For scripts that include a Shellmarks GUI form, you can also edit the script by 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-12-20 15:18:20 -0800
+Last updated 2021-12-20 15:26:24 -0800
 </div>
 </div>
 </body>

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 exit 0
-<shellmarks>
-__category__="Samples/CoolScripts"
-label="Cool Script"
+---
+__tags__="#samples"
+__title__="Cool Script"
 __doc__='''
 This is a really cool script
 
@@ -12,4 +12,3 @@ This is a really cool script
 It will do a bunch of stuff
 '''
 [name]
-</shellmarks>
