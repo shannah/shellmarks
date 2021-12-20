@@ -89,6 +89,13 @@ public class Main implements Runnable {
             File f = new File(p);
             if (f.exists()) includePathFiles.add(f);
         }
+        if (includePathFiles.isEmpty()) {
+            if (includePathsArr.length > 0) {
+                File f = new File(includePathsArr[0]);
+                f.mkdirs();
+                includePathFiles.add(f);
+            }
+        }
         return includePathFiles.toArray(new File[includePathFiles.size()]);
     }
 
@@ -1301,6 +1308,8 @@ public class Main implements Runnable {
             return cat1.name.compareTo(cat2.name);
         });
 
+        root.pruneEmptyCategories();
+
         return root;
     }
 
@@ -1405,6 +1414,26 @@ public class Main implements Runnable {
 
         ScriptCategory() {
 
+        }
+
+        void pruneEmptyCategories() {
+            List<String> emptyCategories = new ArrayList<String>();
+            for (String catName : subCategories.keySet()) {
+                ScriptCategory cat = subCategories.get(catName);
+                if (cat.isEmpty()) {
+                    emptyCategories.add(catName);
+                }
+            }
+            for (String catName : emptyCategories) {
+                subCategories.remove(catName);
+            }
+            for (ScriptCategory cat : subCategories.values()) {
+                cat.pruneEmptyCategories();
+            }
+        }
+
+        boolean isEmpty() {
+            return subCategories.isEmpty() && scripts.isEmpty() && (description == null || description.trim().isEmpty());
         }
 
         ScriptCategory(String name) {
@@ -1611,6 +1640,33 @@ public class Main implements Runnable {
                         }
                     });
                     t.start();
+                }
+
+                @Override
+                public void newSection(DocumentationAppFX app) {
+
+                    EventQueue.invokeLater(()->{
+                        String sectionName = JOptionPane.showInputDialog("Please enter a section name.");
+                        if (sectionName == null) {
+                            return;
+                        }
+                        String sectionLabel = sectionName;
+                        sectionName = sectionName.replace(' ', '-').replaceAll("[^A-Z0-9a-z\\._\\-]", "");
+                        if (sectionName.isEmpty()) {
+                            JOptionPane.showMessageDialog((Component)null, "Invalid name.  Name should only contain letters, numbers, hyphens, periods, and underscores.", "Invalid name", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        String fileName = sectionName;
+                        if (fileName.endsWith(".adoc")) {
+                            sectionName = sectionName.substring(0, sectionName.lastIndexOf("."));
+                            sectionLabel = sectionLabel.substring(0, sectionLabel.lastIndexOf("."));
+                        } else {
+                            fileName += ".adoc";
+                        }
+                        editSection(app, sectionName);
+
+
+                    });
                 }
 
                 @Override
@@ -2031,9 +2087,10 @@ public class Main implements Runnable {
                 .append(":toc: left").append(sep)
                 .append(":docinfo: private").append(sep).append(sep);
 
-        appendScripts(out);
+        out.append(new String(Main.class.getResourceAsStream("welcome.adoc")
+                        .readAllBytes()));
 
-        out.append("++++").append(sep)
+        out.append(sep).append(sep).append("++++").append(sep)
 
                 .append("<style>a.command {border: 1px solid gray; padding: 8px; font-family:sans-serif; color:#333333; border-radius: 3px; text-decoration:none;}" +
                         "a.command:active {background-color: #eaeaea} .section-menu {float:right; margin-top: 20px;    } div.section-menu-content {display:none; float:right; clear:right;  border: 1px solid #cccccc;" +

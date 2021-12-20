@@ -154,3 +154,55 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
   required=true
 ----
 
+image::images/hello-file-1.png[]
+
+Notice here that the _file_ field includes a text field and a "..." button.  In the text field you could simply type or paste teh path to a file.  Pressing the "..." button will show a file dialog where you can select a file.
+
+=== Checkboxes
+
+In some cases, you may want the user to select between two different options: "on" or "off".  You can use the _checkbox_ field type to handle this.  For example, Let's make the _wordcount_ feature of our script optional, so that it is only shown when the user checks the "Show wordcount" option.
+
+E.g.
+
+[source,bash]
+----
+#!/bin/bash
+echo "Hello ${name}"
+if [ ! -z "$showWordcount" ]; then <1>
+    wordcount=$(wc "${file}")
+    echo "Word count in ${file} is ${wordcount}"
+fi
+exit 0
+---
+__title__="Hello World"
+__description__='''
+This example shows you how to add some help text to the top of the dialog.
+
+This content is in Asciidoc format, and supports markup such as https://www.example.com[links].
+'''
+
+[name]
+  label="Enter your name"
+  help="This will be displayed in a tooltip"
+  required=true
+  default="Jimbo"
+
+[showWordcount]
+  label="Show wordcount"
+  help="Check this box to display the wordcount of a file."
+  type="checkbox" <2>
+
+[file]
+  type="file"
+  label="Please select a file"
+  help="The word count for the selected file will be output"
+----
+<1> We use `if [ ! -z "$showWordcount" ]` to check if the `$showWordcount` environment variable is not empty, and only do the _wordcount_ stuff in that case.
+<2> We set `type="checkbox"` for the `showWordcount` field so that it is rendered with a checkbox.
+
+image::images/hello-checkbox-1.png[]
+
+== The Shellmarks Catalog
+
+We've already seen how shellmarks can provide a GUI for individual shell scripts.  It gets better, though.  If you run `shellmarks` without any arguments, it will open a catalog of all of your installed scripts, including documentation, and the ability to run your scripts by pressing a "Run" button.
+

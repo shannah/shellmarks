@@ -1,0 +1,13 @@
+*Welcome to the Shellmarks catalog*
+
+Use this catalog to help organize your shell scripts and their associated documentation.  To get started, choose from the options in the menu below:
+
+== Main Menu
+
+. https://newScript/[Create New Script]
+. Import existing script:
+.. https://importFile/[From File]
+.. https://importURL/[From URL]
+. https://newSection/[Create New Section]
+. https://help/[Help]
+

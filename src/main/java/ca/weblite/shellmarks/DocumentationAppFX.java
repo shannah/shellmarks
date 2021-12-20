@@ -37,6 +37,7 @@ import org.w3c.dom.events.EventTarget;
 
 import java.awt.*;
 import java.net.URI;
+import java.util.Locale;
 
 
 public class DocumentationAppFX extends Application {
@@ -93,6 +94,18 @@ public class DocumentationAppFX extends Application {
         webEngine.loadContent(contents);
     }
 
+    private static int indexAfter(String haystack, String needle) {
+        return haystack.indexOf(needle) + needle.length();
+    }
+
+    private static String convertHref(Event ev, String href, String command) {
+        if (href.toLowerCase().startsWith("http://"+command.toLowerCase()+"/") || href.toLowerCase().startsWith("https://"+command.toLowerCase()+"/")) {
+            href = command.toLowerCase() + ":" + href.substring(indexAfter(href,"//"+command+"/"));
+            ev.preventDefault();
+            ev.stopPropagation();
+        }
+        return href;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -103,6 +116,8 @@ public class DocumentationAppFX extends Application {
         WebView webview = new WebView();
         StackPane stackPane=new StackPane();
         stackPane.getChildren().add(webview);
+
+
 
         webEngine= webview.getEngine();
         webEngine.setJavaScriptEnabled(true);
@@ -126,12 +141,10 @@ public class DocumentationAppFX extends Application {
 
                                     String href = ((Element) ev.getCurrentTarget()).getAttribute("href");
                                     if (href == null) return;
-
-                                    if (href.startsWith("http://run/") || href.startsWith("https://run/")) {
-                                        href = "run:" + href.substring(href.indexOf("//run/")+6);
-                                        ev.preventDefault();
-                                        ev.stopPropagation();
+                                    for (String command : new String[]{"run", "newScript", "importURL", "importFile", "help", "newSection"}) {
+                                        href = convertHref(ev, href, command);
                                     }
+
                                     if (domEventType.equals("click")) {
                                         if (href.startsWith("http://") || href.startsWith("https://")) {
 
@@ -178,6 +191,34 @@ public class DocumentationAppFX extends Application {
                                             if (runScriptListener != null) {
 
                                                 runScriptListener.editSection(DocumentationAppFX.this, href.substring(href.indexOf(":")+1));
+                                            }
+                                            return;
+                                        }
+
+                                        if (href.toLowerCase().startsWith("newscript:")) {
+                                            if (runScriptListener != null) {
+                                                runScriptListener.newScript(DocumentationAppFX.this);
+                                            }
+                                            return;
+                                        }
+
+                                        if (href.toLowerCase().startsWith("importurl:")) {
+                                            if (runScriptListener != null) {
+                                                runScriptListener.importScriptFromURL(DocumentationAppFX.this);
+                                            }
+                                            return;
+                                        }
+
+                                        if (href.toLowerCase().startsWith("importfile:")) {
+                                            if (runScriptListener != null) {
+                                                runScriptListener.importScriptFromFileSystem(DocumentationAppFX.this);
+                                            }
+                                            return;
+                                        }
+
+                                        if (href.toLowerCase().startsWith("newsection:")) {
+                                            if (runScriptListener != null) {
+                                                runScriptListener.newSection(DocumentationAppFX.this);
                                             }
                                             return;
                                         }
