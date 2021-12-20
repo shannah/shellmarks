@@ -1,7 +1,11 @@
 = Shellmarks User Guide
+Steve Hannah <steve@weblite.ca>
+v1.0.0, 2021-12-20
+:description: This document contains usage instructions for the Shellmarks application.
 :doctype: book
 :toc:
 :sectnums:
+:icons: font
 
 > A documentation and GUI generator for your custom shell scripts.
 

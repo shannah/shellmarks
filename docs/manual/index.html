@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.12">
+<meta name="description" content="This document contains usage instructions for the Shellmarks application.">
+<meta name="author" content="Steve Hannah">
 <title>Shellmarks User Guide</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -437,10 +439,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="book">
 <div id="header">
 <h1>Shellmarks User Guide</h1>
+<div class="details">
+<span id="author" class="author">Steve Hannah</span><br>
+<span id="email" class="email"><a href="mailto:steve@weblite.ca">steve@weblite.ca</a></span><br>
+<span id="revnumber">version 1.0.0,</span>
+<span id="revdate">2021-12-20</span>
+</div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -559,7 +568,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 We use <a href="https://www.npmjs.com/">npm</a> for installation because it is cross-platform and easy to use.  <em>npm</em> comes with NodeJS, which can be downloaded from <a href="https://nodejs.org/en/download/">here</a>.
@@ -576,7 +585,7 @@ We use <a href="https://www.npmjs.com/">npm</a> for installation because it is c
 <table>
 <tr>
 <td class="icon">
-<div class="title">Tip</div>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 <em>sudo</em> is required here on Mac and Linux, because we want to install it globally.  That is what the <code>-g</code> flag is for.  <code>sudo</code> is not required on Windows.
@@ -594,31 +603,36 @@ We use <a href="https://www.npmjs.com/">npm</a> for installation because it is c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash <b class="conum">(1)</b>
-echo "Hello ${name}" <b class="conum">(2)</b>
-exit 0 <b class="conum">(3)</b>
----<b class="conum">(4)</b>
-[name] <b class="conum">(5)</b></code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash <i class="conum" data-value="1"></i><b>(1)</b>
+echo "Hello ${name}" <i class="conum" data-value="2"></i><b>(2)</b>
+exit 0 <i class="conum" data-value="3"></i><b>(3)</b>
+-<i class="conum" data-value="4"></i><b>(4)</b>
+[name] <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>Hash-bang is required so that shellmarks knows which shell interpreter to run the script through after it displays the UI dialog.</p>
-</li>
-<li>
-<p>We echo <code>"Hello ${name}"</code> where <code>${name}</code> is an environment variable that we supply in the UI dialog.</p>
-</li>
-<li>
-<p>We need to explicitly exit the script before the Shellmarks UI markup begins.</p>
-</li>
-<li>
-<p>The <code>---</code> divider, on a line of its own, tell <em>shellmarks</em> where the UI markup begins.  Everything after this line will be interpreted as the UI markup, and must be valid <a href="https://toml.io/en/">TOML</a>.</p>
-</li>
-<li>
-<p>We declare a "name" field in the UI dialog for setting the <code>${name}</code> environment variable.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Hash-bang is required so that shellmarks knows which shell interpreter to run the script through after it displays the UI dialog.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We echo <code>"Hello ${name}"</code> where <code>${name}</code> is an environment variable that we supply in the UI dialog.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We need to explicitly exit the script before the Shellmarks UI markup begins.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>---</code> divider, on a line of its own, tell <em>shellmarks</em> where the UI markup begins.  Everything after this line will be interpreted as the UI markup, and must be valid <a href="https://toml.io/en/">TOML</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>We declare a "name" field in the UI dialog for setting the <code>${name}</code> environment variable.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Save this script in a file named "hello.sh", then run it from the command-line with:</p>
@@ -753,7 +767,7 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
 echo "Hello ${name}"
-if [ ! -z "$showWordcount" ]; then <b class="conum">(1)</b>
+if [ ! -z "$showWordcount" ]; then <i class="conum" data-value="1"></i><b>(1)</b>
     wordcount=$(wc "${file}")
     echo "Word count in ${file} is ${wordcount}"
 fi
@@ -775,7 +789,7 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 [showWordcount]
   label="Show wordcount"
   help="Check this box to display the wordcount of a file."
-  type="checkbox" <b class="conum">(2)</b>
+  type="checkbox" <i class="conum" data-value="2"></i><b>(2)</b>
 
 [file]
   type="file"
@@ -784,14 +798,16 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>We use <code>if [ ! -z "$showWordcount" ]</code> to check if the <code>$showWordcount</code> environment variable is not empty, and only do the <em>wordcount</em> stuff in that case.</p>
-</li>
-<li>
-<p>We set <code>type="checkbox"</code> for the <code>showWordcount</code> field so that it is rendered with a checkbox.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We use <code>if [ ! -z "$showWordcount" ]</code> to check if the <code>$showWordcount</code> environment variable is not empty, and only do the <em>wordcount</em> stuff in that case.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We set <code>type="checkbox"</code> for the <code>showWordcount</code> field so that it is rendered with a checkbox.</td>
+</tr>
+</table>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -948,7 +964,7 @@ __tags__="#custom-tag1 #custom-tag2"
 <table>
 <tr>
 <td class="icon">
-<div class="title">Tip</div>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 The script output will appear in the terminal window that you used to launch shellmarks originally.
@@ -1041,7 +1057,7 @@ This section includes a few sample scripts to demonstrate Shellmarks' syntax.</c
 <table>
 <tr>
 <td class="icon">
-<div class="title">Tip</div>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 You can include as much or as little content as you like in your section files. You can even create sub-headings.   All headings will be rendered with the appropriate heading level in the shellmarks catalog.
@@ -1185,7 +1201,7 @@ __tags__="#samples"</code></pre>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Tip</div>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 You can add your script to multiple categories by adding multiple tags.  E.g. <code>__tags__="#category1 #category2"</code>
@@ -1277,28 +1293,31 @@ This section contains content for mobile development</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash <b class="conum">(1)</b>
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash <i class="conum" data-value="1"></i><b>(1)</b>
 
 # ... Shell script source ...
 
-exit 0 <b class="conum">(2)</b>
---- <b class="conum">(3)</b>
+exit 0 <i class="conum" data-value="2"></i><b>(2)</b>
+-<i class="conum" data-value="3"></i><b>(3)</b>
 
 # ... Shellmarks Configuration here ...</code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>"Hash-bang" line tells the script which shell interpreter to use.  E.g. <code><mark>!/bin/bash</code>, <code></mark>!/usr/bin/php</code>, etc&#8230;&#8203;.  Any installed interpreter should work.</p>
-</li>
-<li>
-<p>An <em>exit</em> statement marks the end of the shell script so that the interpreter (e.g <em>bash</em>) doesn&#8217;t try to execute the shellmarks configuration that follows.</p>
-</li>
-<li>
-<p>A dividing line marking the beginning of the Shellmarks configuration.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>"Hash-bang" line tells the script which shell interpreter to use.  E.g. <code><mark>!/bin/bash</code>, <code></mark>!/usr/bin/php</code>, etc&#8230;&#8203;.  Any installed interpreter should work.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>An <em>exit</em> statement marks the end of the shell script so that the interpreter (e.g <em>bash</em>) doesn&#8217;t try to execute the shellmarks configuration that follows.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>A dividing line marking the beginning of the Shellmarks configuration.</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="config">6.1. Shellmarks Configuration</h3>
@@ -1401,7 +1420,7 @@ See https://www.example.com[my website] for more usage instructions.
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Since this is boolean you must use <code>required=true</code>, and <em>not</em> <code>required="true"</code>.
@@ -1570,7 +1589,7 @@ ipa-tools
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 For scripts that include a Shellmarks GUI form, you can also edit the script by first running the script so that its dialog is shown.  Then select "Edit Script" from the "File" menu.
@@ -1584,7 +1603,8 @@ For scripts that include a Shellmarks GUI form, you can also edit the script by 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-12-20 15:26:24 -0800
+Version 1.0.0<br>
+Last updated 2021-12-20 15:34:26 -0800
 </div>
 </div>
 </body>
