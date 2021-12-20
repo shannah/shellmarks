@@ -563,6 +563,7 @@ exit 0 <2>
 <2> An _exit_ statement marks the end of the shell script so that the interpreter (e.g _bash_) doesn't try to execute the shellmarks configuration that follows.
 <3> A dividing line marking the beginning of the Shellmarks configuration.
 
+[#config]
 === Shellmarks Configuration
 
 Shellmark configuration should be valid TOML.  Script properties typically pertain to the the script as a whole.  Field properties apply to individual fields, and are only valid when used inside a field's configuration section.
@@ -647,6 +648,137 @@ IMPORTANT: Since this is boolean you must use `required=true`, and _not_ `requir
 type::
 A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", and "checkbox".  If this property isn't specified it defaults to "text".
 
+[#cli]
+== CLI Usage Instructions
+
+[source,listing]
+----
+Usage: shellmarks [-efhilV] [--as=<targetName>] [--hash=<hash>] [<script>...]
+      [<script>...]       Shell scripts to be run
+      --as=<targetName>   Alias used for the installed script
+  -e, --edit              Edit the provided scripts in default text editor app
+  -f, --force             Force overwite already installed script
+  -h, --help              Show this help message and exit.
+      --hash=<hash>       SHA1 hash onf install script contents to verify that
+                            script is not tampered with.
+  -i, --install           Install scripts
+  -l, --list              Print a list of installed scripts
+  -V, --version           Print version information and exit.
+
+----
+
+=== Running a Script
+
+To run a script, you can simply run `shellmarks /path/to/script.sh`, and it will run it.  If the script is a regular shell script, then it will simply delegate the script running to the shell specified by the script's "hash bang" line.
+
+e.g.
+
+.hello.sh
+[source,bash]
+----
+#!/bin/bash
+echo "Hello World"
+----
+
+.Terminal
+[source,sh]
+----
+shellmarks hello.sh
+----
+
+.Result
+[source,listing]
+----
+Hello World
+----
+
+In this case `shellmarks` would notice that there is no `<shellmarks>` tags in the script, so it would execute it with `/bin/bash`.
+
+Now change the script just slightly to add a `<shellmarks>` tag as follows:
+
+.hello.sh
+[source,bash]
+----
+#!/bin/bash
+echo "Hello ${name}"
+exit 0
+---
+[name]
+label="Please enter your first name"
+----
+
+.Terminal
+[source,sh]
+----
+shellmarks hello.sh
+----
+
+This will prompt you with a dialog to enter your first name.  After fill "Steve" in the name field and pressing "Run", the output would be:
+
+.Result
+[source,listing]
+----
+Hello Steve
+----
+
+=== Installing a Script
+
+Shellmarks allows you to install scripts into the Shellmarks "scripts" directory so that they can be called from anywhere by name.  Use the `-i` or `--install` flag to install a script file.
+
+[source,sh]
+----
+shellmarks -i --as=hello hello.sh
+----
+
+In the above example we are installing the script _hello.sh_ in the current directory as "hello".  What this actually does is copy _hello.sh_ to the shellmarks script directory with a file name _hello_.  After running this command, you'll be able to run the _hello.sh_ script from anywhere by calling:
+
+[source,sh]
+----
+shellmarks hello
+----
+
+You can even delete the original _hello.sh_ script since shellmarks has copied it into its scripts directory.
+
+==== Installing Script from URL
+
+You can also install scripts from a URL. E.g.
+
+[source,sh]
+----
+shellmarks -i https://raw.githubusercontent.com/shannah/shellmarks/master/sample-scripts/ipa-util.sh --as=ipa-util
+----
+
+=== Listing Installed Scripts
+
+Use the `-l` or `--list` flag to print a list of scripts that have been installed.
+
+[source,sh]
+----
+shellmarks -l
+----
+
+.Result
+[source,listing]
+----
+hello
+ipa-tools
+...etc..
+----
+
+=== Editing a Script
+
+Use the `-e` or `--edit` flag to edit a script.  The provided script can either be a path, or the name of a script that has been installed.  This will open the script for editing in the registered application for editing that type of script.
+
+E.g.
+
+[source,sh]
+----
+shellmarks -e hello
+----
+
+The result of the above command would be to open the "hello" script for editing.
+
+NOTE: For scripts that include a Shellmarks GUI form, you can also edit the script by first running the script so that its dialog is shown.  Then select "Edit Script" from the "File" menu.
 
 
 

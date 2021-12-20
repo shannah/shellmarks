@@ -480,7 +480,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_reference">Reference</a></li>
 <li><a href="#_shellmarks_script_syntax">Shellmarks Script Syntax</a>
 <ul class="sectlevel2">
-<li><a href="#_shellmarks_configuration">Shellmarks Configuration</a></li>
+<li><a href="#config">Shellmarks Configuration</a></li>
+</ul>
+</li>
+<li><a href="#cli">CLI Usage Instructions</a>
+<ul class="sectlevel2">
+<li><a href="#_running_a_script">Running a Script</a></li>
+<li><a href="#_installing_a_script">Installing a Script</a></li>
+<li><a href="#_listing_installed_scripts">Listing Installed Scripts</a></li>
+<li><a href="#_editing_a_script">Editing a Script</a></li>
 </ul>
 </li>
 </ul>
@@ -1293,7 +1301,7 @@ exit 0 <b class="conum">(2)</b>
 </ol>
 </div>
 <div class="sect2">
-<h3 id="_shellmarks_configuration">Shellmarks Configuration</h3>
+<h3 id="config">Shellmarks Configuration</h3>
 <div class="paragraph">
 <p>Shellmark configuration should be valid TOML.  Script properties typically pertain to the the script as a whole.  Field properties apply to individual fields, and are only valid when used inside a field&#8217;s configuration section.</p>
 </div>
@@ -1412,10 +1420,171 @@ Since this is boolean you must use <code>required=true</code>, and <em>not</em> 
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="cli">CLI Usage Instructions</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-listing" data-lang="listing">Usage: shellmarks [-efhilV] [--as=&lt;targetName&gt;] [--hash=&lt;hash&gt;] [&lt;script&gt;...]
+      [&lt;script&gt;...]       Shell scripts to be run
+      --as=&lt;targetName&gt;   Alias used for the installed script
+  -e, --edit              Edit the provided scripts in default text editor app
+  -f, --force             Force overwite already installed script
+  -h, --help              Show this help message and exit.
+      --hash=&lt;hash&gt;       SHA1 hash onf install script contents to verify that
+                            script is not tampered with.
+  -i, --install           Install scripts
+  -l, --list              Print a list of installed scripts
+  -V, --version           Print version information and exit.</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_a_script">Running a Script</h3>
+<div class="paragraph">
+<p>To run a script, you can simply run <code>shellmarks /path/to/script.sh</code>, and it will run it.  If the script is a regular shell script, then it will simply delegate the script running to the shell specified by the script&#8217;s "hash bang" line.</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="title">hello.sh</div>
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
+echo "Hello World"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Terminal</div>
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks hello.sh</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Result</div>
+<div class="content">
+<pre class="highlight"><code class="language-listing" data-lang="listing">Hello World</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case <code>shellmarks</code> would notice that there is no <code>&lt;shellmarks&gt;</code> tags in the script, so it would execute it with <code>/bin/bash</code>.</p>
+</div>
+<div class="paragraph">
+<p>Now change the script just slightly to add a <code>&lt;shellmarks&gt;</code> tag as follows:</p>
+</div>
+<div class="listingblock">
+<div class="title">hello.sh</div>
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
+echo "Hello ${name}"
+exit 0
+---
+[name]
+label="Please enter your first name"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Terminal</div>
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks hello.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will prompt you with a dialog to enter your first name.  After fill "Steve" in the name field and pressing "Run", the output would be:</p>
+</div>
+<div class="listingblock">
+<div class="title">Result</div>
+<div class="content">
+<pre class="highlight"><code class="language-listing" data-lang="listing">Hello Steve</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installing_a_script">Installing a Script</h3>
+<div class="paragraph">
+<p>Shellmarks allows you to install scripts into the Shellmarks "scripts" directory so that they can be called from anywhere by name.  Use the <code>-i</code> or <code>--install</code> flag to install a script file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks -i --as=hello hello.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above example we are installing the script <em>hello.sh</em> in the current directory as "hello".  What this actually does is copy <em>hello.sh</em> to the shellmarks script directory with a file name <em>hello</em>.  After running this command, you&#8217;ll be able to run the <em>hello.sh</em> script from anywhere by calling:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks hello</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can even delete the original <em>hello.sh</em> script since shellmarks has copied it into its scripts directory.</p>
+</div>
+<div class="sect3">
+<h4 id="_installing_script_from_url">Installing Script from URL</h4>
+<div class="paragraph">
+<p>You can also install scripts from a URL. E.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks -i https://raw.githubusercontent.com/shannah/shellmarks/master/sample-scripts/ipa-util.sh --as=ipa-util</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_listing_installed_scripts">Listing Installed Scripts</h3>
+<div class="paragraph">
+<p>Use the <code>-l</code> or <code>--list</code> flag to print a list of scripts that have been installed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks -l</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Result</div>
+<div class="content">
+<pre class="highlight"><code class="language-listing" data-lang="listing">hello
+ipa-tools
+...etc..</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_editing_a_script">Editing a Script</h3>
+<div class="paragraph">
+<p>Use the <code>-e</code> or <code>--edit</code> flag to edit a script.  The provided script can either be a path, or the name of a script that has been installed.  This will open the script for editing in the registered application for editing that type of script.</p>
+</div>
+<div class="paragraph">
+<p>E.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks -e hello</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result of the above command would be to open the "hello" script for editing.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+For scripts that include a Shellmarks GUI form, you can also edit the script by first running the script so that its dialog is shown.  Then select "Edit Script" from the "File" menu.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-12-20 15:12:24 -0800
+Last updated 2021-12-20 15:16:00 -0800
 </div>
 </div>
 </body>
