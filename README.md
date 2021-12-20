@@ -1,11 +1,23 @@
 # Shellmarks
-Provide a GUI dialog for a shell script
+A documentation and GUI generator for your custom shell scripts.
 
 ## Synopsis
 
-Shellmarks is a shell script wrapper that allows you to set environment variables via a GUI dialog prior to the script's execution.
+Shellmarks is a productivity tool for developers who create lots of custom shell scripts, but can't remember where they saved them, how to use them, or both.  It provides:
 
-The GUI form is defined using [TOML](https://toml.io/en/) inside the shell script.  If the shell script is run using `shellmarks`, it will first check for such a form definition in the script, and display it to the user.  The user then fills in the form, and presses "Run".  It then runs the script using the script's desired interpreter (as specified by its `#!`) with the user's input in the script's environment.
+1. *A GUI markup language* (using [TOML](https://toml.io/en/)) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.
+2. *A searchable catalog of all of your installed scripts*.  The catalog includes documentation for each script, as well as buttons to _Run_, _Edit_, _Clone_, and _Delete_ them.
+
+## License
+
+MIT
+
+## Features
+
+- *GUI Dialog Generation* - Shellmarks makes it easy to add a GUI dialog to a shell script to allow users to enter environment variables and run the script.
+- *Shell Script Catalog* - Shellmarks generates a script catalog of all of your custom scripts, along with documentation and UI options to run and edit your scripts.
+- *Compatible with Default Shell Interpreters* - Scripts with Shellmarks markup remain fully compatible with the built-in shell script interpreter.  If you run the script directly in, for example, _bash_, it will just run the script normally.  If you run it with _shellmarks_, it will first display a GUI dialog to let the user set up the script's environment, and then run the script in the default interpreter.
+- *Multi-language Support* - You can write your shell scripts in any language you like.  Shellmarks just uses the "hashbang" to know which interpreter to send the script to.
 
 ## Hello World
 
@@ -15,12 +27,11 @@ The following is a simple script that prints _hello ${name}_, where _${name}_ is
 #!/bin/bash
 echo "Hello ${name}"
 exit 0
-<shellmarks>
+---
 [name]
   type="text"
   label="Please enter your name"
   required=true
-</shellmarks>
 ```
 
 If you run this script using _bash_ directly, it will simply output:
@@ -68,14 +79,12 @@ if [ ! -z "$showProvisioningProfile" ]; then
     security cms -D -i "Payload/${appname}/embedded.mobileprovision"
 fi
 exit 0
-<shellmarks>
-title="IPA Entitlements"
-description='''
-<asciidoc>
+---
+__title__="IPA Entitlements"
+__description__='''
 This script will print out the entitlements and provisioning profile for given .ipa file.
 
 See https://developer.apple.com/library/archive/qa/qa1798/_index.html[Apple Tech Article] for more information.
-</asciidoc>
 '''
 [file]
     type="file"
@@ -94,9 +103,6 @@ See https://developer.apple.com/library/archive/qa/qa1798/_index.html[Apple Tech
     label="Show Provisioning Profile"
     default="true"
     help="Check this to show the ipa provisioning profile details."
-
-</shellmarks>
-
 ```
 
 If this script is in a file named _ipa-tools.sh_, then you can run it via:
@@ -115,16 +121,15 @@ Shell scripts written for _shellmarks_ are just regular shell scripts.  At the e
 
 ~~~
 exit 0
-<shellmarks>
+---
 ... Your GUI definitions here in TOML format
-</shellmarks>
 ~~~
 
 Some notes:
 
-We add `exit 0` so that the script exits before reaching the `<shellmarks>` definition.  This ensures that the script will remain compatible with the default shell iterpreter (e.g. bash).
+We add `exit 0` so that the script exits before reaching the shellmarks GUI configuration.  This ensures that the script will remain compatible with the default shell iterpreter (e.g. bash).
 
-The `<shellmarks></shellmarks>` signal _shellmarks_ that there is metadata here for it to process.
+The `---` serves as a dividing line between the script content, and the shellmarks config.
 
 The contents of this tag will be interpreted as [TOML](https://toml.io/en/).
 
@@ -154,6 +159,17 @@ Shellmarks should run on any modern Windows, Linux, or Mac system.
 - [CLI Usage](https://shannah.github.io/shellmarks/manual/#cli)
 - [GUI Form Configuration](https://shannah.github.io/shellmarks/manual/#config)
 - [Sample Scripts](sample-scripts)
-- 
+
+## Credits
+
+Shellmarks was created by [Steve Hannah](https://sjhannah.com).  It owes a great deal to the Java open source eco-system, as its development would have been much more difficult without the mature set of Maven dependencies.
+
+Notable dependencies:
+
+- *[AsciiDoctor](https://asciidoctor.org/)* - Shellmarks uses AsciiDoctor to generate the HTML used for the script catalog.
+- *[JavaFX](https://openjfx.io/)* - The Script catalog interface is written in JavaFX, a top quality cross-platform UI library.
+- *[TOML](https://toml.io/en/)* - Shellmarks needed a simple and concise syntax for describing its UI forms, and TOML fit the bill perfectly.  Less verbose than XML and JSON, and easier to work with than yml.  API was simple to use.  Just dropped in a maven dependency, and I was off and running.
+
+See the [pom.xml file](pom.xml) for a full list of dependencies.
 
 
