@@ -521,6 +521,132 @@ This section contains content for mobile development
 
 Yes.  You can add sections using the "New Section" option.  You can then proceed to add arbitrary content in Asciidoc format.
 
+=== Can I trigger a script to run via a link?
+
+Yes.  You can trigger actions to run from _section_ content (Asciidoc) using a link of the form "https://runScript/SCRIPTNAME" where SCRIPTNAME is the name of your script.
+
+.Adding a link that runs the _hello.sh_ script directly:
+[source,asciidoc]
+----
+https://runScript/hello.sh[Run hello.sh script]
+----
+
+You can even set default environment variables for the script by adding a query string.  E.g.:
+
+[source,asciidoc]
+----
+https://runScript/hello.sh?firstName=Steve&lastName=Hannah[Run hello.sh script]
+----
+
+When you click on this link in the catalog, it will run the `hello.sh` script but with the _firstName_ and _lastName_ environment variables set to "Steve" and "Hannah" respectively.
+
+[reference]
+= Reference
+
+== Shellmarks Script Syntax
+
+Shellmarks scripts use the following structure:
+
+[source,bash]
+----
+#!/bin/bash <1>
+
+# ... Shell script source ...
+
+exit 0 <2>
+--- <3>
+
+# ... Shellmarks Configuration here ...
+
+----
+<1> "Hash-bang" line tells the script which shell interpreter to use.  E.g. `#!/bin/bash`, `#!/usr/bin/php`, etc....  Any installed interpreter should work.
+<2> An _exit_ statement marks the end of the shell script so that the interpreter (e.g _bash_) doesn't try to execute the shellmarks configuration that follows.
+<3> A dividing line marking the beginning of the Shellmarks configuration.
+
+=== Shellmarks Configuration
+
+Shellmark configuration should be valid TOML.  Script properties typically pertain to the the script as a whole.  Field properties apply to individual fields, and are only valid when used inside a field's configuration section.
+
+==== Script Properties
+
+\\__title__::
+The title of the script.  This will be displayed in the Shellmarks catalog, and also as the dialog title when the script is run.
++
+.Example
+[source,toml]
+----
+__title__="My Cool Script"
+----
+\\__description__::
+A description of how to use the script, or what it does.  This is displayed at the top of the dialog that is displayed when the script is run.  It may be a multi-line string, and should be in Asciidoc format.  If the `\\__doc___`  property is not defined, then this will also be displayed in the Shellmarks catalog for the script's details.
++
+.Example
+[source,toml]
+----
+__description__='''
+This script does a bunch of cool things.
+
+See https://www.example.com[my website] for more usage instructions.
+'''
+----
+\\__doc__::
+Documentation for the script that will be displayed for the script in the Shellmarks catalog.  If this is not defined, then the `\\__description__` property will be used instead.  This may be a multi-line string, and should be in Asciidoc format.
++
+.Example
+[source,toml]
+----
+__doc__='''
+This script does a bunch of cool things.
+
+See https://www.example.com[my website] for more usage instructions.
+'''
+----
+\\__tags__::
+One or more "tags" that can be used to mark which categories the script is listed in in the catalog.  Each tag should be prefixed with `#`.
++
+.Example
+[source,toml]
+----
+__tags__="#iosdev #macdev"
+----
+
+==== Field Properties
+
+label::
+The field label. If this isn't defined it will just use the field name as its label.
++
+.Example
+[source,toml]
+----
+label="First Name"
+----
+
+help::
+Tooltip text to display when the user hovers the pointer over the field.  Optional.
++
+.Example
+[source,toml]
+----
+help="This is some tooltip text"
+----
+
+default::
+A default value to use for this field.  When the dialog is shown, it will prefill the field with this value.
+
+required::
+Boolean value indicating whether the field is required.  If this is set to `true`, and the user tries to run the script without entering a value for this field, it will show an error and prompt the user to enter a value.
++
+.Example
+[source,toml]
+----
+required=true
+----
++
+IMPORTANT: Since this is boolean you must use `required=true`, and _not_ `required="true"`.
+
+type::
+A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", and "checkbox".  If this property isn't specified it defaults to "text".
+
 
 
 

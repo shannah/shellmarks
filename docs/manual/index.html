@@ -474,6 +474,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_can_i_organize_my_scripts_into_categories">Can I organize my scripts into categories?</a></li>
 <li><a href="#_can_i_organize_my_categories_into_a_heirarchy_with_sub_categories">Can I Organize my Categories into a heirarchy  with Sub-Categories?</a></li>
 <li><a href="#_can_i_add_custom_content_to_the_catalog_unrelated_to_scripts">Can I add custom content to the catalog, unrelated to scripts?</a></li>
+<li><a href="#_can_i_trigger_a_script_to_run_via_a_link">Can I trigger a script to run via a link?</a></li>
+</ul>
+</li>
+<li><a href="#_reference">Reference</a></li>
+<li><a href="#_shellmarks_script_syntax">Shellmarks Script Syntax</a>
+<ul class="sectlevel2">
+<li><a href="#_shellmarks_configuration">Shellmarks Configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -1223,12 +1230,192 @@ This section contains content for mobile development</code></pre>
 <p>Yes.  You can add sections using the "New Section" option.  You can then proceed to add arbitrary content in Asciidoc format.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_can_i_trigger_a_script_to_run_via_a_link">Can I trigger a script to run via a link?</h3>
+<div class="paragraph">
+<p>Yes.  You can trigger actions to run from <em>section</em> content (Asciidoc) using a link of the form "https://runScript/SCRIPTNAME" where SCRIPTNAME is the name of your script.</p>
+</div>
+<div class="listingblock">
+<div class="title">Adding a link that runs the <em>hello.sh</em> script directly:</div>
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">https://runScript/hello.sh[Run hello.sh script]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can even set default environment variables for the script by adding a query string.  E.g.:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">https://runScript/hello.sh?firstName=Steve&amp;lastName=Hannah[Run hello.sh script]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When you click on this link in the catalog, it will run the <code>hello.sh</code> script but with the <em>firstName</em> and <em>lastName</em> environment variables set to "Steve" and "Hannah" respectively.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_reference">Reference</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_shellmarks_script_syntax">Shellmarks Script Syntax</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Shellmarks scripts use the following structure:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash <b class="conum">(1)</b>
+
+# ... Shell script source ...
+
+exit 0 <b class="conum">(2)</b>
+--- <b class="conum">(3)</b>
+
+# ... Shellmarks Configuration here ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>"Hash-bang" line tells the script which shell interpreter to use.  E.g. <code><mark>!/bin/bash</code>, <code></mark>!/usr/bin/php</code>, etc&#8230;&#8203;.  Any installed interpreter should work.</p>
+</li>
+<li>
+<p>An <em>exit</em> statement marks the end of the shell script so that the interpreter (e.g <em>bash</em>) doesn&#8217;t try to execute the shellmarks configuration that follows.</p>
+</li>
+<li>
+<p>A dividing line marking the beginning of the Shellmarks configuration.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_shellmarks_configuration">Shellmarks Configuration</h3>
+<div class="paragraph">
+<p>Shellmark configuration should be valid TOML.  Script properties typically pertain to the the script as a whole.  Field properties apply to individual fields, and are only valid when used inside a field&#8217;s configuration section.</p>
+</div>
+<div class="sect3">
+<h4 id="_script_properties">Script Properties</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">__title__</dt>
+<dd>
+<p>The title of the script.  This will be displayed in the Shellmarks catalog, and also as the dialog title when the script is run.</p>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-toml" data-lang="toml">__title__="My Cool Script"</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">__description__</dt>
+<dd>
+<p>A description of how to use the script, or what it does.  This is displayed at the top of the dialog that is displayed when the script is run.  It may be a multi-line string, and should be in Asciidoc format.  If the <code>__doc___</code>  property is not defined, then this will also be displayed in the Shellmarks catalog for the script&#8217;s details.</p>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-toml" data-lang="toml">__description__='''
+This script does a bunch of cool things.
+
+See https://www.example.com[my website] for more usage instructions.
+'''</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">__doc__</dt>
+<dd>
+<p>Documentation for the script that will be displayed for the script in the Shellmarks catalog.  If this is not defined, then the <code>__description__</code> property will be used instead.  This may be a multi-line string, and should be in Asciidoc format.</p>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-toml" data-lang="toml">__doc__='''
+This script does a bunch of cool things.
+
+See https://www.example.com[my website] for more usage instructions.
+'''</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">__tags__</dt>
+<dd>
+<p>One or more "tags" that can be used to mark which categories the script is listed in in the catalog.  Each tag should be prefixed with <code>#</code>.</p>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-toml" data-lang="toml">__tags__="#iosdev #macdev"</code></pre>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_field_properties">Field Properties</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">label</dt>
+<dd>
+<p>The field label. If this isn&#8217;t defined it will just use the field name as its label.</p>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-toml" data-lang="toml">label="First Name"</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">help</dt>
+<dd>
+<p>Tooltip text to display when the user hovers the pointer over the field.  Optional.</p>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-toml" data-lang="toml">help="This is some tooltip text"</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">default</dt>
+<dd>
+<p>A default value to use for this field.  When the dialog is shown, it will prefill the field with this value.</p>
+</dd>
+<dt class="hdlist1">required</dt>
+<dd>
+<p>Boolean value indicating whether the field is required.  If this is set to <code>true</code>, and the user tries to run the script without entering a value for this field, it will show an error and prompt the user to enter a value.</p>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-toml" data-lang="toml">required=true</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+Since this is boolean you must use <code>required=true</code>, and <em>not</em> <code>required="true"</code>.
+</td>
+</tr>
+</table>
+</div>
+</dd>
+<dt class="hdlist1">type</dt>
+<dd>
+<p>A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", and "checkbox".  If this property isn&#8217;t specified it defaults to "text".</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-12-20 10:48:06 -0800
+Last updated 2021-12-20 15:12:24 -0800
 </div>
 </div>
 </body>
