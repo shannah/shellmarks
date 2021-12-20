@@ -26,8 +26,8 @@ Further, wouldn't it be nice if my shell scripts included a graphical user inter
 
 Shellmarks is the embodiment of this vision.  It includes two parts:
 
-1. *It provides a GUI markup language* (using TOML syntax) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.
-2. *It provides a searchable catalog of all of your installed scripts*.  The catalog includes documentation for each script, as well as buttons to _Run_, _Edit_, _Clone_, and _Delete_ them.
+1. *A GUI markup language* (using TOML syntax) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.
+2. *A searchable catalog of all of your installed scripts*.  The catalog includes documentation for each script, as well as buttons to _Run_, _Edit_, _Clone_, and _Delete_ them.
 
 [getting-started]
 = Getting Started
