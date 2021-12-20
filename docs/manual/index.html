@@ -455,7 +455,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_checkboxes">Checkboxes</a></li>
 </ul>
 </li>
-<li><a href="#_the_shellmarks_catalog">The Shellmarks Catalog</a></li>
+<li><a href="#_the_shellmarks_catalog">The Shellmarks Catalog</a>
+<ul class="sectlevel2">
+<li><a href="#_creating_a_samples_category">Creating a "Samples" category</a></li>
+</ul>
+</li>
+<li><a href="#_frequently_asked_questions">Frequently Asked Questions</a></li>
+<li><a href="#_script_syntax">Script Syntax</a>
+<ul class="sectlevel2">
+<li><a href="#_what_format_is_used_for_the_shellmark_script_gui_metadata">What format is used for the Shellmark script GUI metadata?</a></li>
+<li><a href="#_what_scripting_languages_are_supported_by_shellmarks">What scripting languages are supported by shellmarks?</a></li>
+</ul>
+</li>
+<li><a href="#_shellmarks_catalog">Shellmarks Catalog</a>
+<ul class="sectlevel2">
+<li><a href="#_where_are_the_scripts_in_the_catalog_stored">Where are the scripts in the catalog stored?</a></li>
+<li><a href="#_can_i_run_multiple_shellmarks_instances_with_different_catalogs">Can I run multiple shellmarks instances with different catalogs?</a></li>
+<li><a href="#_can_i_organize_my_scripts_into_categories">Can I organize my scripts into categories?</a></li>
+<li><a href="#_can_i_organize_my_categories_into_a_heirarchy_with_sub_categories">Can I Organize my Categories into a heirarchy  with Sub-Categories?</a></li>
+<li><a href="#_can_i_add_custom_content_to_the_catalog_unrelated_to_scripts">Can I add custom content to the catalog, unrelated to scripts?</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -772,12 +792,443 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 <div class="paragraph">
 <p>We&#8217;ve already seen how shellmarks can provide a GUI for individual shell scripts.  It gets better, though.  If you run <code>shellmarks</code> without any arguments, it will open a catalog of all of your installed scripts, including documentation, and the ability to run your scripts by pressing a "Run" button.</p>
 </div>
+<div class="listingblock">
+<div class="title">Open the Shellmarks catalog by simply running <em>shellmarks</em> with no arguments.</div>
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">shellmarks</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/shellmarks-catalog.png" alt="shellmarks catalog">
+</div>
+</div>
+<div class="paragraph">
+<p>The first time you open the catalog, it won&#8217;t have any scripts listed.  You can add scripts to your catalog by either creating a new script, or by importing an existing one.  To create a new script, click the "Create New Script" link in the main menu.  To import an existing script, you can press "From File", or "From URL" depending on whether you are loading it from a local file or from a network URL.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start by creating a new script.  Click "Create New Script".</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll be prompted to enter a name for the script:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/new-script-prompt.png" alt="new script prompt">
+</div>
+</div>
+<div class="paragraph">
+<p>Enter "hello-world.sh" for the name, and press "OK".</p>
+</div>
+<div class="paragraph">
+<p>If all goes well, it should open the script for editing in your default text editor.  To help you get started, the script will be pre-populated with a default shell script.  This template may change over time, but at the time of writing, the default script contents are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
+echo "Hello ${firstName} ${lastName}"
+echo "You selected ${selectedFile}"
+if [ ! -z "${option1}" ]; then
+  echo "Option1 was selected"
+fi
+if [ ! -z "${option2}" ]; then
+  echo "Option2 was selected"
+fi
+exit 0
+---
+# The script title
+__title__="hello-world.sh"
+
+# Script description in Asciidoc format
+__description__='''
+This description will be displayed at the top of the form.
+
+It can be multiline and include https://example.com[Links]
+'''
+
+# Doc string.  In asciidoc format.  Displayed in Shellmarks catalog
+__doc__='''
+This will be displayed in the shellmarks catalog.
+
+You can include _asciidoc_ markup, as well as https://www.example.com[links].
+'''
+
+# Tags used to place script into one or more sections of the catalog
+__tags__="#custom-tag1 #custom-tag2"
+
+[firstName]
+  label="First Name"
+  required=true
+
+[lastName]
+  label="Last Name"
+
+[selectedFile]
+  label="Please select a file"
+  type="file"
+
+[option1]
+  label="Option 1"
+  type="checkbox"
+
+[option2]
+  label="Option 2"
+  type="checkbox"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is just a simple script that prompts the user for their first and last name, and it prints "Hello FIRSTNAME LASTNAME" to the console.  If you go back into the Shellmarks catalog, you should see your script listed now.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/shellmarks-catalog-after-add-new.png" alt="shellmarks catalog after add new">
+</div>
+</div>
+<div class="paragraph">
+<p>In the <em>Table of Contents</em>, you should see two instances of the <em>hello-world.sh</em> script you just created.  One under "custom Tag 1", and the other under "custom Tag2".  This is because the script includes a <code><em>tags</em></code> property with two tags: "#custom-tag1 #custom-tag2".  Tags allow you to categorize your scripts into sections.  We&#8217;ll discuss those in more depth later.</p>
+</div>
+<div class="paragraph">
+<p>Either scroll down to the "hello-world.sh" script, or click one of the links to it in the table of contents.  You should see an entry as follows:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/hello-world-in-catalog.png" alt="hello world in catalog">
+</div>
+</div>
+<div class="paragraph">
+<p>All of this information is pulled directly from the properties in the <em>hello-world.sh</em>.  Script.  It includes a description that is taken from the <code>__doc__</code> property.  It shows the script <em>command</em> which can be pasted into the terminal to run the script directly.  And it provides four buttons:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Run</dt>
+<dd>
+<p>Runs the script directly.</p>
+</dd>
+<dt class="hdlist1">Edit</dt>
+<dd>
+<p>Opens the script to be edited in the system text editor.</p>
+</dd>
+<dt class="hdlist1">Delete</dt>
+<dd>
+<p>Delete&#8217;s the script</p>
+</dd>
+<dt class="hdlist1">Clone</dt>
+<dd>
+<p>Makes a clone of the script.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Press "Run" to run the script.  It should open the script&#8217;s dialog as shown here:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/run-hello-world.png" alt="run hello world">
+</div>
+</div>
+<div class="paragraph">
+<p>If you enter data into the form fields and press "Run", you&#8217;ll see the script output in the console.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+The script output will appear in the terminal window that you used to launch shellmarks originally.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_creating_a_samples_category">Creating a "Samples" category</h3>
+<div class="paragraph">
+<p>Currently, our script is filed under two categories "custom Tag1", and "custom Tag2".  Let&#8217;s move it to a new category called "Samples".</p>
+</div>
+<div class="paragraph">
+<p>Press the "Edit" button under the "hello-world.sh" script to open the script for editing.  Then changes the <code>__tags__</code> property to the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">__tags__="#samples"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Save these changes and return to the Shellmarks catalog and press the "Refresh" button in the upper left:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/refresh-catalog-button.png" alt="refresh catalog button">
+</div>
+</div>
+<div class="paragraph">
+<p>You should notice that the table of contents is changed.  Instead of "custom Tag1", and "custom Tag2", it has a "samples" option:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/shellmarks-catalog-samples.png" alt="shellmarks catalog samples">
+</div>
+</div>
+<div class="paragraph">
+<p>Now, let&#8217;s customize the label for the "Samples" section add a description.  Notice to the right of the "samples" heading, there is a menu button.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/section-menu.png" alt="section menu">
+</div>
+</div>
+<div class="paragraph">
+<p>Press this button to expand the menu:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/section-menu-exanded.png" alt="section menu exanded">
+</div>
+</div>
+<div class="paragraph">
+<p>Now press the "Edit Section" menu item.</p>
+</div>
+<div class="paragraph">
+<p>This will create an Asciidoc file with the section details in the system text editor.  If this is the first time you are editing the section, it will generate some default content:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= samples
+
+This is the section description formatted as https://asciidoctor.org/docs/asciidoc-writers-guide/[Asciidoc]
+
+Lorem ipsum, etc...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first line will be used as the title of the section, and all of the content below it will be displayed in the catalog at the beginning of the section.  Let&#8217;s change this to the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= Sample Scripts
+
+This section includes a few sample scripts to demonstrate Shellmarks' syntax.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Save the changes and reload the Shellmarks catalog, and you should see the following:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/shellmarks-catalog-sample-scripts.png" alt="shellmarks catalog sample scripts">
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that the section title is now "Sample Scripts", rather than "samples".  This is because we changed the heading in the section file.  Additionally, the section now includes a helpful description that was taken directly from our input.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+You can include as much or as little content as you like in your section files. You can even create sub-headings.   All headings will be rendered with the appropriate heading level in the shellmarks catalog.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_frequently_asked_questions">Frequently Asked Questions</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_script_syntax">Script Syntax</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_what_format_is_used_for_the_shellmark_script_gui_metadata">What format is used for the Shellmark script GUI metadata?</h3>
+<div class="paragraph">
+<p>Shellmark uses <a href="https://toml.io/en/">TOML</a> for all GUI metadata.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_what_scripting_languages_are_supported_by_shellmarks">What scripting languages are supported by shellmarks?</h3>
+<div class="paragraph">
+<p>You can use any scripting language you like for your shell scripts.  You just need to have the language installed on your computer, and the "hash-bang" line of your shell script should point to the interpreter.  E.g. If the script begins with: <code>#!/bin/bash</code>, it will use the bash shell interpreter.</p>
+</div>
+<div class="paragraph">
+<p>For example, consider the following is the PHP equivalent of the default "Hello" script:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-php" data-lang="php">#!/usr/bin/php
+&lt;?php
+$firstName = @$_ENV['firstName'];
+$lastName = @$_ENV['lastName'];
+$option1 = @$_ENV['option1'];
+$option2 = @$_ENV['option2'];
+$selectedFile = @$_ENV['selectedFile'];
+
+echo "Hello ${firstName} ${lastName}";
+echo "You selected ${selectedFile}";
+if ($option1) {
+    echo "Option1 was selected";
+}
+if ($option2) {
+    echo "Option2 was selected";
+}
+exit(0);
+?&gt;
+---
+# The script title
+__title__="hello-php.php"
+
+# Script description in Asciidoc format
+__description__='''
+This description will be displayed at the top of the form.
+
+It can be multiline and include https://example.com[Links]
+'''
+
+# Doc string.  In asciidoc format.  Displayed in Shellmarks catalog
+__doc__='''
+This will be displayed in the shellmarks catalog.
+
+You can include _asciidoc_ markup, as well as https://www.example.com[links].
+'''
+
+# Tags used to place script into one or more sections of the catalog
+__tags__="#custom-tag1 #custom-tag2"
+
+[firstName]
+  label="First Name"
+  required=true
+
+[lastName]
+  label="Last Name"
+
+[selectedFile]
+  label="Please select a file"
+  type="file"
+
+[option1]
+  label="Option 1"
+  type="checkbox"
+
+[option2]
+  label="Option 2"
+  type="checkbox"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_shellmarks_catalog">Shellmarks Catalog</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_where_are_the_scripts_in_the_catalog_stored">Where are the scripts in the catalog stored?</h3>
+<div class="paragraph">
+<p>Shellmarks stores all scripts in the <code>$HOME/.shellmarks/scripts</code> directory, where <code>$HOME</code> refers to the user&#8217;s home directory.</p>
+</div>
+<div class="paragraph">
+<p>This location can be overridden via the <code>SHELLMARKS_HOME</code> environment variable, whose default value is <code>$HOME/.shellmarks</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_can_i_run_multiple_shellmarks_instances_with_different_catalogs">Can I run multiple shellmarks instances with different catalogs?</h3>
+<div class="paragraph">
+<p>Yes, by launching different instances of shellmarks with different values for the <code>SHELLMARKS_HOME</code> environment variable.</p>
+</div>
+<div class="paragraph">
+<p>E.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">shellmarks #launch with default catalog
+
+SHELLMARKS_HOME=/tmp/temp_catalog shellmarks  #launch with scripts in /tmp/temp_catalog/scripts</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_can_i_organize_my_scripts_into_categories">Can I organize my scripts into categories?</h3>
+<div class="paragraph">
+<p>Yes.  You can use the <code>__tags__</code> property in your script.  For example, the following script will be filed in the "samples" section of the catalog.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
+echo "Hello"
+exit 0
+--
+__tags__="#samples"</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+You can add your script to multiple categories by adding multiple tags.  E.g. <code>__tags__="#category1 #category2"</code>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_can_i_organize_my_categories_into_a_heirarchy_with_sub_categories">Can I Organize my Categories into a heirarchy  with Sub-Categories?</h3>
+<div class="paragraph">
+<p>Yes. You can use the <code>:parent:</code> directive in the section content, just underneath the section header.  Suppose we have two categories "ios" and "android" that we want group under the umbrella category "mobiledev".</p>
+</div>
+<div class="paragraph">
+<p>Then we can edit the "ios" section and change the content to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc"># iOS Development
+:parent: mobiledev
+
+Scripts related to iOS development</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And edit the "android" section, changing the content to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc"># Android Development
+:parent: mobiledev
+
+Scripts related to Android development.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is sufficient to have "ios" and "android" grouped under "mobiledev".  We could further customize the label and description for the "mobiledev" parent category by editing the section with the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc"># Mobile Development
+
+This section contains content for mobile development</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_can_i_add_custom_content_to_the_catalog_unrelated_to_scripts">Can I add custom content to the catalog, unrelated to scripts?</h3>
+<div class="paragraph">
+<p>Yes.  You can add sections using the "New Section" option.  You can then proceed to add arbitrary content in Asciidoc format.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-12-20 08:09:16 -0800
+Last updated 2021-12-20 10:41:35 -0800
 </div>
 </div>
 </body>

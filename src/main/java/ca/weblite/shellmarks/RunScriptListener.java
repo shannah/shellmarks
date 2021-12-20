@@ -12,4 +12,5 @@ public interface RunScriptListener {
     public void importScriptFromURL(DocumentationAppFX app);
     public void editSection(DocumentationAppFX app, String sectionName);
     public void newSection(DocumentationAppFX app);
+
 }

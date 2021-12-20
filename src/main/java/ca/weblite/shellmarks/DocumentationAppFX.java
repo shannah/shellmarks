@@ -35,6 +35,7 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
+import javax.swing.*;
 import java.awt.*;
 import java.net.URI;
 import java.util.Locale;
@@ -326,6 +327,33 @@ public class DocumentationAppFX extends Application {
             runScriptListener.importScriptFromURL(this);
         });
         contextMenu.getItems().add(installScriptUrl);
+
+        MenuItem newSection = new MenuItem("New Section");
+        newSection.setOnAction(evt->{
+            runScriptListener.newSection(this);
+        });
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().add(newSection);
+        contextMenu.getItems().add(new SeparatorMenuItem());
+
+        MenuItem help = new MenuItem("Help");
+        help.setOnAction(evt->{
+            new Thread(()->{
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        Desktop.getDesktop().browse(new URI("https://shannah.github.io/shellmarks/manual/"));
+                    } catch (Exception ex) {
+                        System.err.println("Failed to open shellmarks manual.");
+                        ex.printStackTrace(System.err);
+                    }
+                } else {
+                    EventQueue.invokeLater(()->{
+                        JOptionPane.showMessageDialog((Component)null, "Opening web pages is not supported on this platform.", "Failed", JOptionPane.ERROR_MESSAGE);
+                    });
+                }
+            }).start();
+        });
+        contextMenu.getItems().add(help);
 
         Button menu = new Button();
         menu.setGraphic(FontIcon.of(MaterialDesign.MDI_MENU));

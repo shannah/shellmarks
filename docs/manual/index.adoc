@@ -208,3 +208,319 @@ image::images/hello-checkbox-1.png[]
 
 We've already seen how shellmarks can provide a GUI for individual shell scripts.  It gets better, though.  If you run `shellmarks` without any arguments, it will open a catalog of all of your installed scripts, including documentation, and the ability to run your scripts by pressing a "Run" button.
 
+.Open the Shellmarks catalog by simply running _shellmarks_ with no arguments.
+[source,bash]
+----
+shellmarks
+----
+
+image::images/shellmarks-catalog.png[]
+
+The first time you open the catalog, it won't have any scripts listed.  You can add scripts to your catalog by either creating a new script, or by importing an existing one.  To create a new script, click the "Create New Script" link in the main menu.  To import an existing script, you can press "From File", or "From URL" depending on whether you are loading it from a local file or from a network URL.
+
+Let's start by creating a new script.  Click "Create New Script".
+
+You'll be prompted to enter a name for the script:
+
+image::images/new-script-prompt.png[]
+
+Enter "hello-world.sh" for the name, and press "OK".
+
+If all goes well, it should open the script for editing in your default text editor.  To help you get started, the script will be pre-populated with a default shell script.  This template may change over time, but at the time of writing, the default script contents are:
+
+[source,bash]
+----
+#!/bin/bash
+echo "Hello ${firstName} ${lastName}"
+echo "You selected ${selectedFile}"
+if [ ! -z "${option1}" ]; then
+  echo "Option1 was selected"
+fi
+if [ ! -z "${option2}" ]; then
+  echo "Option2 was selected"
+fi
+exit 0
+---
+# The script title
+__title__="hello-world.sh"
+
+# Script description in Asciidoc format
+__description__='''
+This description will be displayed at the top of the form.
+
+It can be multiline and include https://example.com[Links]
+'''
+
+# Doc string.  In asciidoc format.  Displayed in Shellmarks catalog
+__doc__='''
+This will be displayed in the shellmarks catalog.
+
+You can include _asciidoc_ markup, as well as https://www.example.com[links].
+'''
+
+# Tags used to place script into one or more sections of the catalog
+__tags__="#custom-tag1 #custom-tag2"
+
+[firstName]
+  label="First Name"
+  required=true
+
+[lastName]
+  label="Last Name"
+
+[selectedFile]
+  label="Please select a file"
+  type="file"
+
+[option1]
+  label="Option 1"
+  type="checkbox"
+
+[option2]
+  label="Option 2"
+  type="checkbox"
+
+----
+
+
+It is just a simple script that prompts the user for their first and last name, and it prints "Hello FIRSTNAME LASTNAME" to the console.  If you go back into the Shellmarks catalog, you should see your script listed now.
+
+
+image::images/shellmarks-catalog-after-add-new.png[]
+
+In the _Table of Contents_, you should see two instances of the _hello-world.sh_ script you just created.  One under "custom Tag 1", and the other under "custom Tag2".  This is because the script includes a `__tags__` property with two tags: "#custom-tag1 #custom-tag2".  Tags allow you to categorize your scripts into sections.  We'll discuss those in more depth later.
+
+Either scroll down to the "hello-world.sh" script, or click one of the links to it in the table of contents.  You should see an entry as follows:
+
+image::images/hello-world-in-catalog.png[]
+
+All of this information is pulled directly from the properties in the _hello-world.sh_.  Script.  It includes a description that is taken from the `\\__doc__` property.  It shows the script _command_ which can be pasted into the terminal to run the script directly.  And it provides four buttons:
+
+Run::
+Runs the script directly.
+Edit::
+Opens the script to be edited in the system text editor.
+Delete::
+Delete's the script
+Clone::
+Makes a clone of the script.
+
+Press "Run" to run the script.  It should open the script's dialog as shown here:
+
+image::images/run-hello-world.png[]
+
+If you enter data into the form fields and press "Run", you'll see the script output in the console.
+
+TIP: The script output will appear in the terminal window that you used to launch shellmarks originally.
+
+=== Creating a "Samples" category
+
+Currently, our script is filed under two categories "custom Tag1", and "custom Tag2".  Let's move it to a new category called "Samples".
+
+Press the "Edit" button under the "hello-world.sh" script to open the script for editing.  Then changes the `\\__tags__` property to the following:
+
+[source,bash]
+----
+__tags__="#samples"
+----
+
+Save these changes and return to the Shellmarks catalog and press the "Refresh" button in the upper left:
+
+image::images/refresh-catalog-button.png[]
+
+You should notice that the table of contents is changed.  Instead of "custom Tag1", and "custom Tag2", it has a "samples" option:
+
+
+image::images/shellmarks-catalog-samples.png[]
+
+Now, let's customize the label for the "Samples" section add a description.  Notice to the right of the "samples" heading, there is a menu button.
+
+image::images/section-menu.png[]
+
+Press this button to expand the menu:
+
+image::images/section-menu-exanded.png[]
+
+Now press the "Edit Section" menu item.
+
+This will create an Asciidoc file with the section details in the system text editor.  If this is the first time you are editing the section, it will generate some default content:
+
+[source,asciidoc]
+----
+= samples
+
+This is the section description formatted as https://asciidoctor.org/docs/asciidoc-writers-guide/[Asciidoc]
+
+Lorem ipsum, etc...
+----
+
+The first line will be used as the title of the section, and all of the content below it will be displayed in the catalog at the beginning of the section.  Let's change this to the following:
+
+[source,asciidoc]
+----
+= Sample Scripts
+
+This section includes a few sample scripts to demonstrate Shellmarks' syntax.
+----
+
+Save the changes and reload the Shellmarks catalog, and you should see the following:
+
+image::images/shellmarks-catalog-sample-scripts.png[]
+
+Notice that the section title is now "Sample Scripts", rather than "samples".  This is because we changed the heading in the section file.  Additionally, the section now includes a helpful description that was taken directly from our input.
+
+TIP: You can include as much or as little content as you like in your section files. You can even create sub-headings.   All headings will be rendered with the appropriate heading level in the shellmarks catalog.
+
+[faq]
+= Frequently Asked Questions
+
+== Script Syntax
+
+=== What format is used for the Shellmark script GUI metadata?
+
+Shellmark uses https://toml.io/en/[TOML] for all GUI metadata.
+
+=== What scripting languages are supported by shellmarks?
+
+You can use any scripting language you like for your shell scripts.  You just need to have the language installed on your computer, and the "hash-bang" line of your shell script should point to the interpreter.  E.g. If the script begins with: `#!/bin/bash`, it will use the bash shell interpreter.
+
+For example, consider the following is the PHP equivalent of the default "Hello" script:
+
+[source,php]
+----
+#!/usr/bin/php
+<?php
+$firstName = @$_ENV['firstName'];
+$lastName = @$_ENV['lastName'];
+$option1 = @$_ENV['option1'];
+$option2 = @$_ENV['option2'];
+$selectedFile = @$_ENV['selectedFile'];
+
+echo "Hello ${firstName} ${lastName}";
+echo "You selected ${selectedFile}";
+if ($option1) {
+    echo "Option1 was selected";
+}
+if ($option2) {
+    echo "Option2 was selected";
+}
+exit(0);
+?>
+---
+# The script title
+__title__="hello-php.php"
+
+# Script description in Asciidoc format
+__description__='''
+This description will be displayed at the top of the form.
+
+It can be multiline and include https://example.com[Links]
+'''
+
+# Doc string.  In asciidoc format.  Displayed in Shellmarks catalog
+__doc__='''
+This will be displayed in the shellmarks catalog.
+
+You can include _asciidoc_ markup, as well as https://www.example.com[links].
+'''
+
+# Tags used to place script into one or more sections of the catalog
+__tags__="#custom-tag1 #custom-tag2"
+
+[firstName]
+  label="First Name"
+  required=true
+
+[lastName]
+  label="Last Name"
+
+[selectedFile]
+  label="Please select a file"
+  type="file"
+
+[option1]
+  label="Option 1"
+  type="checkbox"
+
+[option2]
+  label="Option 2"
+  type="checkbox"
+
+----
+
+== Shellmarks Catalog
+
+=== Where are the scripts in the catalog stored?
+
+Shellmarks stores all scripts in the `$HOME/.shellmarks/scripts` directory, where `$HOME` refers to the user's home directory.
+
+This location can be overridden via the `SHELLMARKS_HOME` environment variable, whose default value is `$HOME/.shellmarks`.
+
+=== Can I run multiple shellmarks instances with different catalogs?
+
+Yes, by launching different instances of shellmarks with different values for the `SHELLMARKS_HOME` environment variable.
+
+E.g.
+
+[source, bash]
+----
+shellmarks #launch with default catalog
+
+SHELLMARKS_HOME=/tmp/temp_catalog shellmarks  #launch with scripts in /tmp/temp_catalog/scripts
+----
+
+=== Can I organize my scripts into categories?
+
+Yes.  You can use the `\\__tags__` property in your script.  For example, the following script will be filed in the "samples" section of the catalog.
+
+[source,bash]
+----
+#!/bin/bash
+echo "Hello"
+exit 0
+--
+__tags__="#samples"
+----
+
+TIP: You can add your script to multiple categories by adding multiple tags.  E.g. `\\__tags__="#category1 #category2"`
+
+=== Can I Organize my Categories into a heirarchy  with Sub-Categories?
+
+Yes. You can use the `:parent:` directive in the section content, just underneath the section header.  Suppose we have two categories "ios" and "android" that we want group under the umbrella category "mobiledev".
+
+Then we can edit the "ios" section and change the content to:
+
+[source,asciidoc]
+----
+# iOS Development
+:parent: mobiledev
+
+Scripts related to iOS development
+----
+
+And edit the "android" section, changing the content to:
+
+[source,asciidoc]
+----
+# Android Development
+:parent: mobiledev
+
+Scripts related to Android development.
+----
+
+This is sufficient to have "ios" and "android" grouped under "mobiledev".  We could further customize the label and description for the "mobiledev" parent category by editing the section with the following:
+
+[source,asciidoc]
+----
+# Mobile Development
+
+This section contains content for mobile development
+----
+
+=== Can I add custom content to the catalog, unrelated to scripts?
+
+Yes.  You can add sections using the "New Section" option.  You can then proceed to add arbitrary content in Asciidoc format.
+
+
+
+

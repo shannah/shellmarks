@@ -1268,7 +1268,7 @@ public class Main implements Runnable {
             out.add(cat);
         }
 
-        for (ScriptCategory cat : out) {
+        for (ScriptCategory cat : new ArrayList<ScriptCategory>(out)) {
             if (cat == root) continue;
             if (cat.parentName != null && !categoryMap.containsKey(cat.parentName)) {
                 // A parent category is referenced but it doesn't have
@@ -1276,10 +1276,12 @@ public class Main implements Runnable {
                 ScriptCategory parentCategory = new ScriptCategory(cat.parentName);
                 parentCategory.add(cat);
                 categoryMap.put(parentCategory.name, parentCategory);
+                root.add(parentCategory);
                 out.add(parentCategory);
             } else if (cat.parentName != null) {
                 ScriptCategory parentCategory = categoryMap.get(cat.parentName);
                 parentCategory.add(cat);
+
             } else {
                 root.add(cat);
             }
@@ -1512,8 +1514,10 @@ public class Main implements Runnable {
                     continue;
                 }
                 if (firstLine && line.matches("^=+ [A-Za-z0-9].*$")) {
-                    label = line.substring(line.indexOf(" ")+1).trim();
+                    label = line.substring(line.indexOf(" ") + 1).trim();
                     firstLine = false;
+                } else if (line.matches("^\\:parent\\: .*$")) {
+                    parentName = line.substring(line.indexOf(" ")+1).trim();
                 } else {
                     descriptionBuilder.append(line).append(System.lineSeparator());
                 }

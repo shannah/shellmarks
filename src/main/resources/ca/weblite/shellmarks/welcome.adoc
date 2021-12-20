@@ -9,5 +9,5 @@ Use this catalog to help organize your shell scripts and their associated docume
 .. https://importFile/[From File]
 .. https://importURL/[From URL]
 . https://newSection/[Create New Section]
-. https://help/[Help]
+. https://shannah.github.io/shellmarks/manual/[Help]
 
