@@ -26,7 +26,7 @@ Further, wouldn't it be nice if my shell scripts included a graphical user inter
 
 Shellmarks is the embodiment of this vision.  It includes two parts:
 
-1. *A GUI markup language* (using TOML syntax) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.
+1. *A GUI markup language* (using https://toml.io/en/[TOML syntax]) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.
 2. *A searchable catalog of all of your installed scripts*.  The catalog includes documentation for each script, as well as buttons to _Run_, _Edit_, _Clone_, and _Delete_ them.
 
 [getting-started]
@@ -58,7 +58,7 @@ exit 0 <3>
 <1> Hash-bang is required so that shellmarks knows which shell interpreter to run the script through after it displays the UI dialog.
 <2> We echo `"Hello ${name}"` where `${name}` is an environment variable that we supply in the UI dialog.
 <3> We need to explicitly exit the script before the Shellmarks UI markup begins.
-<4> The `---` divider, on a line of its own, tell _shellmarks_ where the UI markup begins.  Everything after this line will be interpreted as the UI markup, and must be valid TOML.
+<4> The `---` divider, on a line of its own, tell _shellmarks_ where the UI markup begins.  Everything after this line will be interpreted as the UI markup, and must be valid https://toml.io/en/[TOML].
 <5> We declare a "name" field in the UI dialog for setting the `${name}` environment variable.
 
 Save this script in a file named "hello.sh", then run it from the command-line with:

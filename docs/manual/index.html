@@ -522,7 +522,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>A GUI markup language</strong> (using TOML syntax) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.</p>
+<p><strong>A GUI markup language</strong> (using <a href="https://toml.io/en/">TOML syntax</a>) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.</p>
 </li>
 <li>
 <p><strong>A searchable catalog of all of your installed scripts</strong>.  The catalog includes documentation for each script, as well as buttons to <em>Run</em>, <em>Edit</em>, <em>Clone</em>, and <em>Delete</em> them.</p>
@@ -598,7 +598,7 @@ exit 0 <b class="conum">(3)</b>
 <p>We need to explicitly exit the script before the Shellmarks UI markup begins.</p>
 </li>
 <li>
-<p>The <code>---</code> divider, on a line of its own, tell <em>shellmarks</em> where the UI markup begins.  Everything after this line will be interpreted as the UI markup, and must be valid TOML.</p>
+<p>The <code>---</code> divider, on a line of its own, tell <em>shellmarks</em> where the UI markup begins.  Everything after this line will be interpreted as the UI markup, and must be valid <a href="https://toml.io/en/">TOML</a>.</p>
 </li>
 <li>
 <p>We declare a "name" field in the UI dialog for setting the <code>${name}</code> environment variable.</p>
@@ -1228,7 +1228,7 @@ This section contains content for mobile development</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-12-20 10:46:47 -0800
+Last updated 2021-12-20 10:48:06 -0800
 </div>
 </div>
 </body>
