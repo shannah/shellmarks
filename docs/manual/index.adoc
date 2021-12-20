@@ -1,6 +1,7 @@
 = Shellmarks User Guide
 :doctype: book
 :toc:
+:sectnums:
 
 > A documentation and GUI generator for your custom shell scripts.
 
