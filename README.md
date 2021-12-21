@@ -5,7 +5,7 @@ A documentation and GUI generator for your custom shell scripts.
 
 Shellmarks is a productivity tool for developers who create lots of custom shell scripts, but can't remember where they saved them, how to use them, or both.  It provides:
 
-1. *A GUI markup language* (using [TOML](https://toml.io/en/)) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.
+1. *A GUI markup language* (using [TOML](https://toml.io/en/)) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, buttons, and checkbox fields, but more field types can easily be added as needs be.
 2. *A searchable catalog of all of your installed scripts*.  The catalog includes documentation for each script, as well as buttons to _Run_, _Edit_, _Clone_, and _Delete_ them.
 
 [Watch Screencast Intro (12 minutes)](https://youtu.be/8JwSA3rh39Y)

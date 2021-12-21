@@ -462,6 +462,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_customizing_dialog_title_and_help_text">2.2. Customizing Dialog Title and Help Text</a></li>
 <li><a href="#_file_selection">2.3. File Selection</a></li>
 <li><a href="#_checkboxes">2.4. Checkboxes</a></li>
+<li><a href="#_buttons">2.5. Buttons</a></li>
 </ul>
 </li>
 <li><a href="#_the_shellmarks_catalog">3. The Shellmarks Catalog</a>
@@ -546,7 +547,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>A GUI markup language</strong> (using <a href="https://toml.io/en/">TOML syntax</a>) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.</p>
+<p><strong>A GUI markup language</strong> (using <a href="https://toml.io/en/">TOML syntax</a>) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, buttons, and checkbox fields, but more field types can easily be added as needs be.</p>
 </li>
 <li>
 <p><strong>A searchable catalog of all of your installed scripts</strong>.  The catalog includes documentation for each script, as well as buttons to <em>Run</em>, <em>Edit</em>, <em>Clone</em>, and <em>Delete</em> them.</p>
@@ -812,6 +813,93 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 <div class="imageblock">
 <div class="content">
 <img src="images/hello-checkbox-1.png" alt="hello checkbox 1">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_buttons">2.5. Buttons</h3>
+<div class="paragraph">
+<p>The "button" type provides an alternate way to pass boolean values to your script.  If you define any fields with the "button" type, they will be rendered on your script&#8217;s dialog instead of the standard "Run" button.  Pressing the button will run the script, but with the corresponding environment variable set to "1".</p>
+</div>
+<div class="listingblock">
+<div class="title">Example: A dialog with 3 buttons.</div>
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
+
+if [ ! -z "$button1Clicked" ]; then
+    echo "Button 1 was clicked"
+fi
+if [ ! -z "$button2Clicked" ]; then
+    echo "Button 2 was clicked"
+fi
+if [ ! -z "$button3Clicked" ]; then
+    echo "Button 3 was clicked"
+fi
+exit 0
+---
+# The script title
+__title__="Buttons Sample"
+
+# Script description in Asciidoc format
+__description__='''
+This example shows how to use the 'button' field type to add multiple submit buttons on your dialog.
+'''
+
+# Tags used to place script into one or more sections of the catalog
+__tags__="#samples"
+
+[button1Clicked]
+    label="Button 1"
+    type="button"
+
+[button2Clicked]
+    label="Button 2"
+    type="button"
+
+[button3Clicked]
+    label="Button 3"
+    type="button"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The dialog for this script is:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/buttons-sample.png" alt="buttons sample">
+</div>
+</div>
+<div class="paragraph">
+<p>If you click on "Button 1", it will set the <code>${button1Clicked}</code> environment variable, so the script can detect this case.  Similarly the other buttons will set their corresponding environment variable when they are pressed.</p>
+</div>
+<div class="sect3">
+<h4 id="_dispose_on_submit">2.5.1. Dispose On Submit</h4>
+<div class="paragraph">
+<p>The default behaviour of shellmarks is to dispose the dialog when the user submits the form by either pressing the "Run" button or a button defined by a field with <code>type="button"</code>.  In some cases, you may want to keep the dialog open so that you can run the script again with different settings.  For example a server management script might include buttons to <em>Start</em>, <em>Stop</em>, and <em>Check Status</em> on the server.  In this case you may want to run <em>Check Status</em> first to see if the server is running, and then press <em>Start</em> to start the server.  It would be annoying if the dialog closed after checking the status.</p>
+</div>
+<div class="paragraph">
+<p>You can use the <em>disposeOnSubmit</em> property to control this:</p>
+</div>
+<div class="paragraph">
+<p>e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">[startServer]
+  type="button"
+  label="Start Server"
+  disposeOnSubmit=false
+
+[stopServer]
+  type="button"
+  label="Stop Server"
+  disposeOnSubmit=false
+
+[serverStatus]
+  type="button"
+  label="Check Server Status"
+  disposeOnSubmit=false</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1431,7 +1519,20 @@ Since this is boolean you must use <code>required=true</code>, and <em>not</em> 
 </dd>
 <dt class="hdlist1">type</dt>
 <dd>
-<p>A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", and "checkbox".  If this property isn&#8217;t specified it defaults to "text".</p>
+<p>A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", "button", and "checkbox".  If this property isn&#8217;t specified it defaults to "text".</p>
+</dd>
+<dt class="hdlist1">disposeOnSubmit</dt>
+<dd>
+<p>A boolean option used only on <em>button</em> fields to indicate that the dialog should remain open after the button is pressed, thus allowing the user to, perhaps, run the script again without having to reopen the dialog.  Default value is <code>true</code>.  Set to <code>false</code> to cause the window to stay open on submit.</p>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code class="language-toml" data-lang="toml">[checkServerStatus]
+    label="Check Server Status"
+    type="button"
+    disposeOnSubmit=false</code></pre>
+</div>
+</div>
 </dd>
 </dl>
 </div>
@@ -1604,7 +1705,7 @@ For scripts that include a Shellmarks GUI form, you can also edit the script by 
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2021-12-20 15:34:26 -0800
+Last updated 2021-12-21 06:36:14 -0800
 </div>
 </div>
 </body>

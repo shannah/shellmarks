@@ -31,7 +31,7 @@ Further, wouldn't it be nice if my shell scripts included a graphical user inter
 
 Shellmarks is the embodiment of this vision.  It includes two parts:
 
-1. *A GUI markup language* (using https://toml.io/en/[TOML syntax]) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.
+1. *A GUI markup language* (using https://toml.io/en/[TOML syntax]) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, buttons, and checkbox fields, but more field types can easily be added as needs be.
 2. *A searchable catalog of all of your installed scripts*.  The catalog includes documentation for each script, as well as buttons to _Run_, _Edit_, _Clone_, and _Delete_ them.
 
 [getting-started]
@@ -208,6 +208,84 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 <2> We set `type="checkbox"` for the `showWordcount` field so that it is rendered with a checkbox.
 
 image::images/hello-checkbox-1.png[]
+
+=== Buttons
+
+The "button" type provides an alternate way to pass boolean values to your script.  If you define any fields with the "button" type, they will be rendered on your script's dialog instead of the standard "Run" button.  Pressing the button will run the script, but with the corresponding environment variable set to "1".
+
+.Example: A dialog with 3 buttons.
+[source,bash]
+----
+#!/bin/bash
+
+if [ ! -z "$button1Clicked" ]; then
+    echo "Button 1 was clicked"
+fi
+if [ ! -z "$button2Clicked" ]; then
+    echo "Button 2 was clicked"
+fi
+if [ ! -z "$button3Clicked" ]; then
+    echo "Button 3 was clicked"
+fi
+exit 0
+---
+# The script title
+__title__="Buttons Sample"
+
+# Script description in Asciidoc format
+__description__='''
+This example shows how to use the 'button' field type to add multiple submit buttons on your dialog.
+'''
+
+# Tags used to place script into one or more sections of the catalog
+__tags__="#samples"
+
+[button1Clicked]
+    label="Button 1"
+    type="button"
+
+[button2Clicked]
+    label="Button 2"
+    type="button"
+
+[button3Clicked]
+    label="Button 3"
+    type="button"
+
+----
+
+The dialog for this script is:
+
+image::images/buttons-sample.png[]
+
+If you click on "Button 1", it will set the `${button1Clicked}` environment variable, so the script can detect this case.  Similarly the other buttons will set their corresponding environment variable when they are pressed.
+
+==== Dispose On Submit
+
+The default behaviour of shellmarks is to dispose the dialog when the user submits the form by either pressing the "Run" button or a button defined by a field with `type="button"`.  In some cases, you may want to keep the dialog open so that you can run the script again with different settings.  For example a server management script might include buttons to _Start_, _Stop_, and _Check Status_ on the server.  In this case you may want to run _Check Status_ first to see if the server is running, and then press _Start_ to start the server.  It would be annoying if the dialog closed after checking the status.
+
+You can use the _disposeOnSubmit_ property to control this:
+
+e.g.
+
+[source,bash]
+----
+[startServer]
+  type="button"
+  label="Start Server"
+  disposeOnSubmit=false
+
+[stopServer]
+  type="button"
+  label="Stop Server"
+  disposeOnSubmit=false
+
+[serverStatus]
+  type="button"
+  label="Check Server Status"
+  disposeOnSubmit=false
+----
+
 
 == The Shellmarks Catalog
 
@@ -651,7 +729,19 @@ required=true
 IMPORTANT: Since this is boolean you must use `required=true`, and _not_ `required="true"`.
 
 type::
-A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", and "checkbox".  If this property isn't specified it defaults to "text".
+A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", "button", and "checkbox".  If this property isn't specified it defaults to "text".
+
+disposeOnSubmit::
+A boolean option used only on _button_ fields to indicate that the dialog should remain open after the button is pressed, thus allowing the user to, perhaps, run the script again without having to reopen the dialog.  Default value is `true`.  Set to `false` to cause the window to stay open on submit.
++
+.Example
+[source,toml]
+----
+[checkServerStatus]
+    label="Check Server Status"
+    type="button"
+    disposeOnSubmit=false
+----
 
 [#cli]
 == CLI Usage Instructions

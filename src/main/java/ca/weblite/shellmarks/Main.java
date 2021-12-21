@@ -38,6 +38,7 @@ public class Main implements Runnable {
     private boolean submitted = false;
     private boolean cancelled = false;
     private static boolean doNotExit;
+    private boolean disposeOnSubmit;
 
     @CommandLine.Option(names = {"-i", "--install"}, description = "Install scripts")
     private boolean installScript;
@@ -424,7 +425,7 @@ public class Main implements Runnable {
     }
 
     private class Form {
-        List<Field> fields;
+        List<Field> fields = new ArrayList<>();
         String title;
         String description;
         String docString;
@@ -466,6 +467,7 @@ public class Main implements Runnable {
         FieldType type;
         String defaultValue;
         int order;
+        boolean disposeOnSubmit;
     }
 
     private enum FieldType {
@@ -473,7 +475,8 @@ public class Main implements Runnable {
         Text,
         Number,
         Date,
-        CheckBox
+        CheckBox,
+        Button
     }
 
     private boolean parseUI2(String scriptString) {
@@ -538,6 +541,7 @@ public class Main implements Runnable {
                 field.label = value.getString("label", field.varName);
                 field.help = value.getString("help", null);
                 field.order = fieldOrders.indexOf(field.varName);
+                field.disposeOnSubmit = value.getBoolean("disposeOnSubmit", true);
                 String typestr = value.getString("type", "Text").toLowerCase();
                 switch (typestr) {
                     case "file":
@@ -550,6 +554,8 @@ public class Main implements Runnable {
                         field.type = FieldType.Date; break;
                     case "checkbox":
                         field.type = FieldType.CheckBox; break;
+                    case "button":
+                        field.type = FieldType.Button; break;
                     default:
                         field.type = FieldType.Text; break;
                 }
@@ -560,9 +566,12 @@ public class Main implements Runnable {
             }
 
         }
-        Collections.sort(form.fields, (f1, f2) -> {
-            return f1.order - f2.order;
-        });
+        if (form.fields != null) {
+            Collections.sort(form.fields, (f1, f2) -> {
+                return f1.order - f2.order;
+            });
+        }
+
         return true;
     }
 
@@ -747,31 +756,70 @@ public class Main implements Runnable {
         }
 
 
+        List<JButton> buttons = new ArrayList<JButton>();
         for (Field field : form.fields) {
-            out.add(buildUI(field));
+            if (field.type != FieldType.Button) {
+                out.add(buildUI(field));
+            } else {
+                buttons.add((JButton)buildUI(field));
+            }
         }
 
-        JButton submit = new JButton("Run");
-        submit.addActionListener(evt -> {
-            try {
-                validateForm(out);
-            } catch (ValidationFailure ex) {
-                JOptionPane.showMessageDialog(out, ex.getMessage(), "Validation Failure", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+        if (buttons.isEmpty()) {
+            JButton submit = new JButton("Run");
+            submit.addActionListener(evt->{
+                disposeOnSubmit = true;
+            });
+            buttons.add(submit);
+        }
+        for (JButton submit : buttons) {
+            submit.addActionListener(evt -> {
+                for (JButton b : buttons) {
+                    // If there are multiple button fields, then we need to remove environment variables
+                    // from other buttons that may have been run previously
+                    if (b != submit) {
+                        Field buttonField = getFieldForComponent(b);
+                        if (buttonField != null) {
+                            environment.remove(buttonField.varName);
+                        }
+                    }
+                }
+                EventQueue.invokeLater(()->{
+                    try {
+                        validateForm(out);
+                    } catch (ValidationFailure ex) {
+                        JOptionPane.showMessageDialog(out, ex.getMessage(), "Validation Failure", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
 
-            synchronized (lock) {
-                submitted = true;
-                lock.notifyAll();
-            }
-            try {
-                JFrame top = (JFrame) submit.getTopLevelAncestor();
-                top.dispose();
-            } catch (Exception ex) {
-                System.err.println("Problem getting top level ancestor of submit button");
-                ex.printStackTrace(System.err);
-            }
-        });
+
+                    if (disposeOnSubmit) {
+                        synchronized (lock) {
+                            submitted = true;
+                            lock.notifyAll();
+                        }
+                        try {
+                            JFrame top = (JFrame) submit.getTopLevelAncestor();
+                            top.dispose();
+                        } catch (Exception ex) {
+                            System.err.println("Problem getting top level ancestor of submit button");
+                            ex.printStackTrace(System.err);
+                        }
+                    } else {
+                        // We aren't disposing on submit, so we should run directly.
+                        new Thread(()->{
+                            try {
+                                runScript(readToString(new FileInputStream(scriptFile)));
+                            } catch (Exception ex) {
+                                System.err.println("An error occurred while running "+scriptFile+". "+ex.getMessage());
+                                ex.printStackTrace(System.err);
+                            }
+                        }).start();
+                    }
+                });
+
+            });
+        }
 
         JButton cancel = new JButton("Cancel");
         cancel.addActionListener(evt->{
@@ -780,7 +828,7 @@ public class Main implements Runnable {
                 lock.notifyAll();
             }
             try {
-                JFrame top = (JFrame) submit.getTopLevelAncestor();
+                JFrame top = (JFrame) cancel.getTopLevelAncestor();
                 top.dispose();
             } catch (Exception ex) {
                 System.err.println("Problem getting top level ancestor of submit button");
@@ -788,8 +836,8 @@ public class Main implements Runnable {
             }
         });
 
-
-        out.add(center(submit, cancel));
+        buttons.add(cancel);
+        out.add(center(buttons.toArray(new JButton[buttons.size()])));
 
         return out;
     }
@@ -819,6 +867,8 @@ public class Main implements Runnable {
 
             case CheckBox:
                 return buildCheckboxField(field);
+            case Button:
+                return buildButtonField(field);
 
 
 
@@ -944,6 +994,30 @@ public class Main implements Runnable {
         wrapper.setLayout(new FlowLayout(FlowLayout.LEFT));
         wrapper.add(out);
         return wrapper;
+
+    }
+
+    private Field getFieldForComponent(JComponent cmp) {
+        return (Field)cmp.getClientProperty(FIELD_KEY);
+    }
+
+    private JComponent buildButtonField(Field field) {
+
+        JButton out =  new JButton(field.label);
+        if (("true".equalsIgnoreCase(field.defaultValue) || "1".equals(field.defaultValue) || "on".equalsIgnoreCase(field.defaultValue) || "checked".equalsIgnoreCase(field.defaultValue) || "yes".equalsIgnoreCase(field.defaultValue))) {
+            environment.put(field.varName, "1");
+        }
+        if (field.help != null) {
+            out.setToolTipText(field.help);
+        }
+        out.putClientProperty(FIELD_KEY, field);
+        out.addActionListener(evt -> {
+            disposeOnSubmit = field.disposeOnSubmit;
+            environment.put(field.varName, "1");
+
+
+        });
+        return out;
 
     }
 
@@ -1096,7 +1170,7 @@ public class Main implements Runnable {
         this.scriptFile = file;
         //System.out.println("Running script: "+readToString(new FileInputStream(scriptFile)));
         parseUI(readToString(new FileInputStream(scriptFile)));
-        if (form.hasFields()) {
+        if (form.hasFields() || (form.description != null && !form.description.isEmpty())) {
             EventQueue.invokeLater(()->{
                 JPanel ui = buildUI();
                 JFrame f = new JFrame("Run Script");
@@ -1168,7 +1242,8 @@ public class Main implements Runnable {
                 }
             }
         }
-        if (!cancelled) {
+
+        if (!cancelled && disposeOnSubmit) {
             runScript(readToString(new FileInputStream(scriptFile)));
         }
 
