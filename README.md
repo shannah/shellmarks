@@ -133,6 +133,14 @@ The `---` serves as a dividing line between the script content, and the shellmar
 
 The contents of this tag will be interpreted as [TOML](https://toml.io/en/).
 
+## Script Catalog
+
+If you run `shellmarks` with no arguments, it will open up the script catalog with all of the scripts that you've installed into shellmarks.
+
+Each installed script in the catalog is rendered with an entry that allows you to run, edit, delete, or clone it.  
+
+![Script Catalog](https://shannah.github.io/shellmarks/manual/images/shellmarks-catalog-samples.png)
+
 ## Installation
 
 Installation requires that you have NodeJS installed, because the installer uses npm.
