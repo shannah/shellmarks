@@ -8,6 +8,8 @@ Shellmarks is a productivity tool for developers who create lots of custom shell
 1. *A GUI markup language* (using [TOML](https://toml.io/en/)) that can be embedded directly into a shell script. When the script is run using shellmarks, it will display a dialog to the user, prompting them to provide some environment variables.  Currently the dialog can contain text fields, file selection fields, and checkbox fields, but more field types can easily be added as needs be.
 2. *A searchable catalog of all of your installed scripts*.  The catalog includes documentation for each script, as well as buttons to _Run_, _Edit_, _Clone_, and _Delete_ them.
 
+[Watch Screencast Intro (12 minutes)](https://youtu.be/8JwSA3rh39Y)
+
 ## License
 
 MIT
@@ -167,6 +169,7 @@ Shellmarks should run on any modern Windows, Linux, or Mac system.
 - [CLI Usage](https://shannah.github.io/shellmarks/manual/#cli)
 - [GUI Form Configuration](https://shannah.github.io/shellmarks/manual/#config)
 - [Sample Scripts](sample-scripts)
+- [Screencast Intro Video](https://youtu.be/8JwSA3rh39Y)
 
 ## Credits
 
