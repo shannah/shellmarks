@@ -20,6 +20,7 @@ if [ ! -z "$showProvisioningProfile" ]; then
     security cms -D -i "Payload/${appname}/embedded.mobileprovision"
 fi
 exit 0
+---
 __title__="IPA Entitlements"
 __description__='''
 This script will print out the entitlements and provisioning profile for given .ipa file.
