@@ -2,7 +2,7 @@
 # This is an example script that can start, stop, and check status
 # of a Xataface project.  It probably isn't reusable, but is a good
 # example of how you might automate your server management in Shellmarks
-echo "Running with ${serverStatus}"
+
 PORT="9090"
 TUXPIN_PATH=/path/to/tuxpin
 URL="http://localhost:$PORT"
