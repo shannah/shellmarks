@@ -4,7 +4,7 @@
 # pip install pytube
 set -e
 pytubePath=$(which pytube)
-if [ -z $pytubePath ]; then
+if [ -z "$pytubePath" ]; then
     echo "This script requires pytube"
     open https://pytube.io/en/latest/user/install.html
     exit 1
