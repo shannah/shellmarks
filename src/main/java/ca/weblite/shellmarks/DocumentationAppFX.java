@@ -37,6 +37,8 @@ import org.w3c.dom.events.EventTarget;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.Locale;
 
@@ -142,11 +144,14 @@ public class DocumentationAppFX extends Application {
 
                                     String href = ((Element) ev.getCurrentTarget()).getAttribute("href");
                                     if (href == null) return;
-                                    for (String command : new String[]{"run", "newScript", "importURL", "importFile", "help", "newSection"}) {
+                                    for (String command : new String[]{"run", "newScript", "importURL", "importFile", "help", "newSection", "open"}) {
                                         href = convertHref(ev, href, command);
                                     }
 
+
+
                                     if (domEventType.equals("click")) {
+
                                         if (href.startsWith("http://") || href.startsWith("https://")) {
 
                                             ev.preventDefault();
@@ -166,6 +171,35 @@ public class DocumentationAppFX extends Application {
 
                                                 runScriptListener.runScript(DocumentationAppFX.this, href.substring(href.indexOf(":")+1));
                                             }
+                                            return;
+                                        }
+
+                                        if (href.startsWith("open:")) {
+                                            ev.preventDefault();
+                                            ev.stopPropagation();
+                                            File file = new File(href.substring(href.indexOf(":")+1));
+
+                                            new Thread(()->{
+
+                                                if (Desktop.isDesktopSupported()) {
+                                                    try {
+                                                        if (file.exists()) {
+                                                            Desktop.getDesktop().open(file);
+                                                        } else {
+                                                            EventQueue.invokeLater(()->{
+                                                                JOptionPane.showMessageDialog((Component)null, "The file "+file+" does not exist", "Could not open", JOptionPane.ERROR_MESSAGE);
+                                                            });
+                                                        }
+                                                    } catch (IOException ex) {
+                                                        EventQueue.invokeLater(()->{
+                                                            JOptionPane.showMessageDialog((Component)null, "Failed to open file: "+ex.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
+                                                        });
+                                                        System.err.println("Failed to open directory.");
+                                                        ex.printStackTrace(System.err);
+                                                    }
+                                                }
+                                            }).start();
+
                                             return;
                                         }
 
