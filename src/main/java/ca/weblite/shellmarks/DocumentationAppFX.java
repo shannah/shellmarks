@@ -55,7 +55,7 @@ public class DocumentationAppFX extends Application {
         DocumentationAppFX.title = title;
         DocumentationAppFX.content = content;
         DocumentationAppFX.runScriptListener = listener;
-        launch(new String[0]);
+        launch(DocumentationAppFX.class, new String[0]);
     }
 
 
@@ -177,7 +177,7 @@ public class DocumentationAppFX extends Application {
                                         if (href.startsWith("open:")) {
                                             ev.preventDefault();
                                             ev.stopPropagation();
-                                            File file = new File(href.substring(href.indexOf(":")+1));
+                                            File file = new File(href.substring(href.indexOf(":")+1).replace("%20", " "));
 
                                             new Thread(()->{
 

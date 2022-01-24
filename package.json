@@ -5,10 +5,11 @@
   "main": "index.js",
   "preferGlobal": true,
   "repository": "https://github.com/shannah/shellmarks",
-  "version": "1.0.16",
+  "version": "1.0.21",
   "jdeploy": {
       "jar": "target/shellmarks-cli-1.0-SNAPSHOT.jar",
-      "installers" : ["mac", "win", "linux"]
+      "installers" : ["mac", "win", "linux"],
+      "bundles" : ["linux"]
   },
   "dependencies": {"shelljs": "^0.8.4", "njre": "^0.2.0"},
   "license": "ISC",

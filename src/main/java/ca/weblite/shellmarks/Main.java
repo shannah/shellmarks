@@ -472,6 +472,7 @@ public class Main implements Runnable {
 
     private enum FieldType {
         File,
+        Directory,
         Text,
         Number,
         Date,
@@ -546,6 +547,8 @@ public class Main implements Runnable {
                 switch (typestr) {
                     case "file":
                         field.type = FieldType.File; break;
+                    case "directory":
+                        field.type = FieldType.Directory; break;
                     case "text":
                         field.type = FieldType.Text; break;
                     case "number":
@@ -858,6 +861,7 @@ public class Main implements Runnable {
     private JComponent buildUI(Field field) {
         switch (field.type) {
             case File:
+            case Directory:
                 return buildFileField(field);
 
             case Text:
@@ -943,14 +947,21 @@ public class Main implements Runnable {
 
         JButton browseButton = new JButton("...");
         browseButton.addActionListener(evt->{
+            if (field.type == FieldType.Directory) {
+                System.setProperty("apple.awt.fileDialogForDirectories", "true");
+            }
             FileDialog dialog = new FileDialog((Frame)null, "Select file", FileDialog.LOAD);
             if (!pathField.getText().isEmpty()) {
                 dialog.setFile(pathField.getText());
             }
             dialog.setVisible(true);
+
             for (File f : dialog.getFiles()) {
                 pathField.setText(f.getAbsolutePath());
                 environment.put(field.varName, pathField.getText());
+            }
+            if (field.type == FieldType.Directory) {
+                System.setProperty("apple.awt.fileDialogForDirectories", "false");
             }
         });
 
