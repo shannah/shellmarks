@@ -729,7 +729,7 @@ required=true
 IMPORTANT: Since this is boolean you must use `required=true`, and _not_ `required="true"`.
 
 type::
-A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", "button", and "checkbox".  If this property isn't specified it defaults to "text".
+A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", "directory",  "button", and "checkbox".  If this property isn't specified it defaults to "text".
 
 disposeOnSubmit::
 A boolean option used only on _button_ fields to indicate that the dialog should remain open after the button is pressed, thus allowing the user to, perhaps, run the script again without having to reopen the dialog.  Default value is `true`.  Set to `false` to cause the window to stay open on submit.

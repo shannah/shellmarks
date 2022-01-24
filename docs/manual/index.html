@@ -4,27 +4,25 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.12">
+<meta name="generator" content="Asciidoctor 2.0.16">
 <meta name="description" content="This document contains usage instructions for the Shellmarks application.">
 <meta name="author" content="Steve Hannah">
 <title>Shellmarks User Guide</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
-/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
-/* Uncomment @import statement to use as custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
-article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
-audio,video{display:inline-block}
-audio:not([controls]){display:none;height:0}
-html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
 a{background:none}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
 h1{font-size:2em;margin:.67em 0}
-abbr[title]{border-bottom:1px dotted}
 b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
 dfn{font-style:italic}
-hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+hr{height:0}
 mark{background:#ff0;color:#000}
 code,kbd,pre,samp{font-family:monospace;font-size:1em}
 pre{white-space:pre-wrap}
@@ -36,20 +34,22 @@ sub{bottom:-.25em}
 img{border:0}
 svg:not(:root){overflow:hidden}
 figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
 fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
 legend{border:0;padding:0}
 button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
 button,input{line-height:normal}
 button,select{text-transform:none}
-button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
 button[disabled],html input[disabled]{cursor:default}
-input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type=checkbox],input[type=radio]{padding:0}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
 textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
-*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+*,::before,::after{box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -69,7 +69,7 @@ div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,
 a{color:#2156a5;text-decoration:underline;line-height:inherit}
 a:hover,a:focus{color:#1d4b8f}
 a img{border:0}
-p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
 p aside{font-size:.875em;line-height:1.35;font-style:italic}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
 h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
@@ -78,14 +78,14 @@ h2{font-size:1.6875em}
 h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
 h4,h5{font-size:1.125em}
 h6{font-size:1em}
-hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
 em,i{font-style:italic;line-height:inherit}
 strong,b{font-weight:bold;line-height:inherit}
 small{font-size:60%;line-height:inherit}
 code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
-ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
 ul,ol{margin-left:1.5em}
-ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
 ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
 ul.square{list-style-type:square}
 ul.circle{list-style-type:circle}
@@ -93,19 +93,14 @@ ul.disc{list-style-type:disc}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
-abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
-abbr{text-transform:none}
 blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
-blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
-blockquote cite::before{content:"\2014 \0020"}
-blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
 blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
 @media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
 h1{font-size:2.75em}
 h2{font-size:2.3125em}
 h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
 h4{font-size:1.4375em}}
-table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede;word-wrap:normal}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
 table thead,table tfoot{background:#f7f8f7}
 table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
@@ -120,7 +115,7 @@ h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title str
 :not(pre).nobreak{word-wrap:normal}
 :not(pre).nowrap{white-space:nowrap}
 :not(pre).pre-wrap{white-space:pre-wrap}
-:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
 pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
 pre>code{display:block}
@@ -128,7 +123,7 @@ pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
 em em{font-style:normal}
 strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
-kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
 .keyseq kbd:last-child{margin-right:0}
 .menuseq,.menuref{color:#000}
@@ -140,7 +135,7 @@ b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
 b.button::before{content:"[";padding:0 3px 0 2px}
 b.button::after{content:"]";padding:0 2px 0 3px}
 p a>code:hover{color:rgba(0,0,0,.9)}
-#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
 #header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
 #header::after,#content::after,#footnotes::after,#footer::after{clear:both}
 #content{margin-top:1.25em}
@@ -148,7 +143,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
 #header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
-#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
 #header .details br{display:none}
@@ -182,11 +177,11 @@ body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9
 #toc.toc2>ul{font-size:.95em}
 #toc.toc2 ul ul{padding-left:1.25em}
 body.toc2.toc-right{padding-left:0;padding-right:20em}}
-#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
 #content #toc>:first-child{margin-top:0}
 #content #toc>:last-child{margin-bottom:0}
 #footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
-#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
 #content{margin-bottom:.625em}
 .sect1{padding-bottom:.625em}
 @media screen and (min-width:768px){#content{margin-bottom:1.25em}
@@ -199,29 +194,32 @@ body.toc2.toc-right{padding-left:0;padding-right:20em}}
 #content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
 #content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
 details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
-details>summary:first-of-type{cursor:pointer;display:list-item;outline:none;margin-bottom:.75em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;-webkit-tap-highlight-color:transparent}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
 .admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
 table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
-.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
-table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
 .admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
 .admonitionblock>table td.icon{text-align:center;width:80px}
 .admonitionblock>table td.icon img{max-width:none}
 .admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
-.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
 .exampleblock>.content>:first-child{margin-top:0}
 .exampleblock>.content>:last-child{margin-bottom:0}
-.sidebarblock{border-style:solid;border-width:1px;border-color:#dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
 .sidebarblock>:first-child{margin-top:0}
 .sidebarblock>:last-child{margin-bottom:0}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
 .exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
-.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
-.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
 .listingblock>.content{position:relative}
 .listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
@@ -229,7 +227,7 @@ table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font
 .listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
 .listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
 .listingblock pre.highlightjs{padding:0}
-.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
 .listingblock pre.prettyprint{border-width:0}
 .prettyprint{background:#f7f7f8}
 pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
@@ -239,8 +237,8 @@ pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
 table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
 table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
 table.linenotable td.code{padding-left:.75em}
-table.linenotable td.linenos{border-right:1px solid currentColor;opacity:.35;padding-right:.5em}
-pre.pygments .lineno{border-right:1px solid currentColor;opacity:.35;display:inline-block;margin-right:.75em}
+table.linenotable td.linenos{border-right:1px solid;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid;opacity:.35;display:inline-block;margin-right:.75em}
 pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock{margin:0 1em 1.25em 1.5em;display:table}
 .quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
@@ -250,7 +248,7 @@ pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
 .quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
 .verseblock{margin:0 1em 1.25em}
-.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
 .verseblock pre strong{font-weight:400}
 .verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
 .quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
@@ -263,7 +261,7 @@ pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
 .quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
 .quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
-.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
 p.tableblock:last-child{margin-bottom:0}
 td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
 td.tableblock>.content>:last-child{margin-bottom:-1.25em}
@@ -298,10 +296,10 @@ ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ul
 ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
 ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
 ul.unstyled,ol.unstyled{margin-left:0}
-ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
-ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
 ul.inline>li{margin-left:1.25em}
 .unstyled dl dt{font-weight:400;font-style:normal}
 ol.arabic{list-style-type:decimal}
@@ -320,7 +318,7 @@ td.hdlist2{word-wrap:anywhere}
 .colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
 .colist td:not([class]):first-child img{max-width:none}
 .colist td:not([class]):last-child{padding:.25em 0}
-.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
 .imageblock.left{margin:.25em .625em 1.25em 0}
 .imageblock.right{margin:.25em 0 1.25em .625em}
 .imageblock>.title{margin-bottom:0}
@@ -388,7 +386,7 @@ a span.icon>.fa{cursor:inherit}
 .admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
 .admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
 .admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
-.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:50%;border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
 .conum[data-value] *{color:#fff!important}
 .conum[data-value]+b{display:none}
 .conum[data-value]::after{content:attr(data-value)}
@@ -396,19 +394,20 @@ pre .conum[data-value]{position:relative;top:-.125em}
 b.conum *{color:inherit!important}
 .conum:not([data-value]):empty{display:none}
 dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
-h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
 p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
-.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
 .print-only{display:none!important}
 @page{margin:1.25cm .75cm}
-@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
 html{font-size:80%}
 a{color:inherit!important;text-decoration:underline!important}
 a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
 a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
 abbr[title]::after{content:" (" attr(title) ")"}
 pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
 thead{display:table-header-group}
@@ -432,7 +431,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .print-only{display:block!important}
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
-@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
 .sect1{padding:0!important}
 .sect1+.sect1{border:0}
 #footer{background:none}
@@ -579,7 +578,7 @@ We use <a href="https://www.npmjs.com/">npm</a> for installation because it is c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo npm install -g shellmarks</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">sudo npm install -g shellmarks</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -604,8 +603,8 @@ We use <a href="https://www.npmjs.com/">npm</a> for installation because it is c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash <i class="conum" data-value="1"></i><b>(1)</b>
-echo "Hello ${name}" <i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash <i class="conum" data-value="1"></i><b>(1)</b>
+echo &quot;Hello ${name}&quot; <i class="conum" data-value="2"></i><b>(2)</b>
 exit 0 <i class="conum" data-value="3"></i><b>(3)</b>
 -<i class="conum" data-value="4"></i><b>(4)</b>
 [name] <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
@@ -640,7 +639,7 @@ exit 0 <i class="conum" data-value="3"></i><b>(3)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">shellmarks hello.sh</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">shellmarks hello.sh</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -656,7 +655,7 @@ exit 0 <i class="conum" data-value="3"></i><b>(3)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-listing" data-lang="listing">Hello Duke</code></pre>
+<pre class="CodeRay highlight"><code data-lang="listing">Hello Duke</code></pre>
 </div>
 </div>
 <div class="sect2">
@@ -666,15 +665,15 @@ exit 0 <i class="conum" data-value="3"></i><b>(3)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
-echo "Hello ${name}"
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
+echo &quot;Hello ${name}&quot;
 exit 0
 ---
 [name]
-  label="Enter your name"
-  help="This will be displayed in a tooltip"
+  label=&quot;Enter your name&quot;
+  help=&quot;This will be displayed in a tooltip&quot;
   required=true
-  default="Jimbo"</code></pre>
+  default=&quot;Jimbo&quot;</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -690,11 +689,11 @@ exit 0
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
-echo "Hello ${name}"
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
+echo &quot;Hello ${name}&quot;
 exit 0
 ---
-__title__="Hello World"
+__title__=&quot;Hello World&quot;
 __description__='''
 This example shows you how to add some help text to the top of the dialog.
 
@@ -702,10 +701,10 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 '''
 
 [name]
-  label="Enter your name"
-  help="This will be displayed in a tooltip"
+  label=&quot;Enter your name&quot;
+  help=&quot;This will be displayed in a tooltip&quot;
   required=true
-  default="Jimbo"</code></pre>
+  default=&quot;Jimbo&quot;</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -721,13 +720,13 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
-echo "Hello ${name}"
-wordcount=$(wc "${file}")
-echo "Word count in ${file} is ${wordcount}"
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
+echo &quot;Hello ${name}&quot;
+wordcount=$(wc &quot;${file}&quot;)
+echo &quot;Word count in ${file} is ${wordcount}&quot;
 exit 0
 ---
-__title__="Hello World"
+__title__=&quot;Hello World&quot;
 __description__='''
 This example shows you how to add some help text to the top of the dialog.
 
@@ -735,15 +734,15 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 '''
 
 [name]
-  label="Enter your name"
-  help="This will be displayed in a tooltip"
+  label=&quot;Enter your name&quot;
+  help=&quot;This will be displayed in a tooltip&quot;
   required=true
-  default="Jimbo"
+  default=&quot;Jimbo&quot;
 
 [file]
-  type="file"
-  label="Please select a file"
-  help="The word count for the selected file will be output"
+  type=&quot;file&quot;
+  label=&quot;Please select a file&quot;
+  help=&quot;The word count for the selected file will be output&quot;
   required=true</code></pre>
 </div>
 </div>
@@ -766,15 +765,15 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
-echo "Hello ${name}"
-if [ ! -z "$showWordcount" ]; then <i class="conum" data-value="1"></i><b>(1)</b>
-    wordcount=$(wc "${file}")
-    echo "Word count in ${file} is ${wordcount}"
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
+echo &quot;Hello ${name}&quot;
+if [ ! -z &quot;$showWordcount&quot; ]; then <i class="conum" data-value="1"></i><b>(1)</b>
+    wordcount=$(wc &quot;${file}&quot;)
+    echo &quot;Word count in ${file} is ${wordcount}&quot;
 fi
 exit 0
 ---
-__title__="Hello World"
+__title__=&quot;Hello World&quot;
 __description__='''
 This example shows you how to add some help text to the top of the dialog.
 
@@ -782,20 +781,20 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 '''
 
 [name]
-  label="Enter your name"
-  help="This will be displayed in a tooltip"
+  label=&quot;Enter your name&quot;
+  help=&quot;This will be displayed in a tooltip&quot;
   required=true
-  default="Jimbo"
+  default=&quot;Jimbo&quot;
 
 [showWordcount]
-  label="Show wordcount"
-  help="Check this box to display the wordcount of a file."
-  type="checkbox" <i class="conum" data-value="2"></i><b>(2)</b>
+  label=&quot;Show wordcount&quot;
+  help=&quot;Check this box to display the wordcount of a file.&quot;
+  type=&quot;checkbox&quot; <i class="conum" data-value="2"></i><b>(2)</b>
 
 [file]
-  type="file"
-  label="Please select a file"
-  help="The word count for the selected file will be output"</code></pre>
+  type=&quot;file&quot;
+  label=&quot;Please select a file&quot;
+  help=&quot;The word count for the selected file will be output&quot;</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -824,21 +823,21 @@ This content is in Asciidoc format, and supports markup such as https://www.exam
 <div class="listingblock">
 <div class="title">Example: A dialog with 3 buttons.</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
 
-if [ ! -z "$button1Clicked" ]; then
-    echo "Button 1 was clicked"
+if [ ! -z &quot;$button1Clicked&quot; ]; then
+    echo &quot;Button 1 was clicked&quot;
 fi
-if [ ! -z "$button2Clicked" ]; then
-    echo "Button 2 was clicked"
+if [ ! -z &quot;$button2Clicked&quot; ]; then
+    echo &quot;Button 2 was clicked&quot;
 fi
-if [ ! -z "$button3Clicked" ]; then
-    echo "Button 3 was clicked"
+if [ ! -z &quot;$button3Clicked&quot; ]; then
+    echo &quot;Button 3 was clicked&quot;
 fi
 exit 0
 ---
 # The script title
-__title__="Buttons Sample"
+__title__=&quot;Buttons Sample&quot;
 
 # Script description in Asciidoc format
 __description__='''
@@ -846,19 +845,19 @@ This example shows how to use the 'button' field type to add multiple submit but
 '''
 
 # Tags used to place script into one or more sections of the catalog
-__tags__="#samples"
+__tags__=&quot;#samples&quot;
 
 [button1Clicked]
-    label="Button 1"
-    type="button"
+    label=&quot;Button 1&quot;
+    type=&quot;button&quot;
 
 [button2Clicked]
-    label="Button 2"
-    type="button"
+    label=&quot;Button 2&quot;
+    type=&quot;button&quot;
 
 [button3Clicked]
-    label="Button 3"
-    type="button"</code></pre>
+    label=&quot;Button 3&quot;
+    type=&quot;button&quot;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -885,19 +884,19 @@ __tags__="#samples"
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">[startServer]
-  type="button"
-  label="Start Server"
+<pre class="CodeRay highlight"><code data-lang="bash">[startServer]
+  type=&quot;button&quot;
+  label=&quot;Start Server&quot;
   disposeOnSubmit=false
 
 [stopServer]
-  type="button"
-  label="Stop Server"
+  type=&quot;button&quot;
+  label=&quot;Stop Server&quot;
   disposeOnSubmit=false
 
 [serverStatus]
-  type="button"
-  label="Check Server Status"
+  type=&quot;button&quot;
+  label=&quot;Check Server Status&quot;
   disposeOnSubmit=false</code></pre>
 </div>
 </div>
@@ -914,7 +913,7 @@ __tags__="#samples"
 <div class="listingblock">
 <div class="title">Open the Shellmarks catalog by simply running <em>shellmarks</em> with no arguments.</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">shellmarks</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">shellmarks</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -944,19 +943,19 @@ __tags__="#samples"
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
-echo "Hello ${firstName} ${lastName}"
-echo "You selected ${selectedFile}"
-if [ ! -z "${option1}" ]; then
-  echo "Option1 was selected"
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
+echo &quot;Hello ${firstName} ${lastName}&quot;
+echo &quot;You selected ${selectedFile}&quot;
+if [ ! -z &quot;${option1}&quot; ]; then
+  echo &quot;Option1 was selected&quot;
 fi
-if [ ! -z "${option2}" ]; then
-  echo "Option2 was selected"
+if [ ! -z &quot;${option2}&quot; ]; then
+  echo &quot;Option2 was selected&quot;
 fi
 exit 0
 ---
 # The script title
-__title__="hello-world.sh"
+__title__=&quot;hello-world.sh&quot;
 
 # Script description in Asciidoc format
 __description__='''
@@ -973,26 +972,26 @@ You can include _asciidoc_ markup, as well as https://www.example.com[links].
 '''
 
 # Tags used to place script into one or more sections of the catalog
-__tags__="#custom-tag1 #custom-tag2"
+__tags__=&quot;#custom-tag1 #custom-tag2&quot;
 
 [firstName]
-  label="First Name"
+  label=&quot;First Name&quot;
   required=true
 
 [lastName]
-  label="Last Name"
+  label=&quot;Last Name&quot;
 
 [selectedFile]
-  label="Please select a file"
-  type="file"
+  label=&quot;Please select a file&quot;
+  type=&quot;file&quot;
 
 [option1]
-  label="Option 1"
-  type="checkbox"
+  label=&quot;Option 1&quot;
+  type=&quot;checkbox&quot;
 
 [option2]
-  label="Option 2"
-  type="checkbox"</code></pre>
+  label=&quot;Option 2&quot;
+  type=&quot;checkbox&quot;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1070,7 +1069,7 @@ The script output will appear in the terminal window that you used to launch she
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">__tags__="#samples"</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">__tags__=&quot;#samples&quot;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1113,7 +1112,7 @@ The script output will appear in the terminal window that you used to launch she
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= samples
+<pre class="CodeRay highlight"><code data-lang="asciidoc">= samples
 
 This is the section description formatted as https://asciidoctor.org/docs/asciidoc-writers-guide/[Asciidoc]
 
@@ -1125,7 +1124,7 @@ Lorem ipsum, etc...</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= Sample Scripts
+<pre class="CodeRay highlight"><code data-lang="asciidoc">= Sample Scripts
 
 This section includes a few sample scripts to demonstrate Shellmarks' syntax.</code></pre>
 </div>
@@ -1181,27 +1180,27 @@ You can include as much or as little content as you like in your section files. 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-php" data-lang="php">#!/usr/bin/php
-&lt;?php
-$firstName = @$_ENV['firstName'];
-$lastName = @$_ENV['lastName'];
-$option1 = @$_ENV['option1'];
-$option2 = @$_ENV['option2'];
-$selectedFile = @$_ENV['selectedFile'];
+<pre class="CodeRay highlight"><code data-lang="php">#!/usr/bin/php
+<span style="font-weight:bold;color:#666">&lt;?php</span>
+<span style="color:#950">$firstName</span> = <span style="color:#C00;font-weight:bold">@</span><span style="color:#369;font-weight:bold">$_ENV</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">firstName</span><span style="color:#710">'</span></span>];
+<span style="color:#950">$lastName</span> = <span style="color:#C00;font-weight:bold">@</span><span style="color:#369;font-weight:bold">$_ENV</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lastName</span><span style="color:#710">'</span></span>];
+<span style="color:#950">$option1</span> = <span style="color:#C00;font-weight:bold">@</span><span style="color:#369;font-weight:bold">$_ENV</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">option1</span><span style="color:#710">'</span></span>];
+<span style="color:#950">$option2</span> = <span style="color:#C00;font-weight:bold">@</span><span style="color:#369;font-weight:bold">$_ENV</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">option2</span><span style="color:#710">'</span></span>];
+<span style="color:#950">$selectedFile</span> = <span style="color:#C00;font-weight:bold">@</span><span style="color:#369;font-weight:bold">$_ENV</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">selectedFile</span><span style="color:#710">'</span></span>];
 
-echo "Hello ${firstName} ${lastName}";
-echo "You selected ${selectedFile}";
-if ($option1) {
-    echo "Option1 was selected";
+<span style="color:#369;font-weight:bold">echo</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Hello </span><span style="color:#950">${firstName}</span><span style="color:#D20"> </span><span style="color:#950">${lastName}</span><span style="color:#710">&quot;</span></span>;
+<span style="color:#369;font-weight:bold">echo</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">You selected </span><span style="color:#950">${selectedFile}</span><span style="color:#710">&quot;</span></span>;
+<span style="color:#080;font-weight:bold">if</span> (<span style="color:#950">$option1</span>) {
+    <span style="color:#369;font-weight:bold">echo</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Option1 was selected</span><span style="color:#710">&quot;</span></span>;
 }
-if ($option2) {
-    echo "Option2 was selected";
+<span style="color:#080;font-weight:bold">if</span> (<span style="color:#950">$option2</span>) {
+    <span style="color:#369;font-weight:bold">echo</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Option2 was selected</span><span style="color:#710">&quot;</span></span>;
 }
-exit(0);
-?&gt;
+<span style="color:#369;font-weight:bold">exit</span>(<span style="color:#00D">0</span>);
+<span style="font-weight:bold;color:#666">?&gt;</span>
 ---
 # The script title
-__title__="hello-php.php"
+__title__=&quot;hello-php.php&quot;
 
 # Script description in Asciidoc format
 __description__='''
@@ -1218,26 +1217,26 @@ You can include _asciidoc_ markup, as well as https://www.example.com[links].
 '''
 
 # Tags used to place script into one or more sections of the catalog
-__tags__="#custom-tag1 #custom-tag2"
+__tags__=&quot;#custom-tag1 #custom-tag2&quot;
 
 [firstName]
-  label="First Name"
+  label=&quot;First Name&quot;
   required=true
 
 [lastName]
-  label="Last Name"
+  label=&quot;Last Name&quot;
 
 [selectedFile]
-  label="Please select a file"
-  type="file"
+  label=&quot;Please select a file&quot;
+  type=&quot;file&quot;
 
 [option1]
-  label="Option 1"
-  type="checkbox"
+  label=&quot;Option 1&quot;
+  type=&quot;checkbox&quot;
 
 [option2]
-  label="Option 2"
-  type="checkbox"</code></pre>
+  label=&quot;Option 2&quot;
+  type=&quot;checkbox&quot;</code></pre>
 </div>
 </div>
 </div>
@@ -1265,7 +1264,7 @@ __tags__="#custom-tag1 #custom-tag2"
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">shellmarks #launch with default catalog
+<pre class="CodeRay highlight"><code data-lang="bash">shellmarks #launch with default catalog
 
 SHELLMARKS_PATH=/tmp/temp_catalog shellmarks  #launch with scripts in /tmp/temp_catalog</code></pre>
 </div>
@@ -1278,11 +1277,11 @@ SHELLMARKS_PATH=/tmp/temp_catalog shellmarks  #launch with scripts in /tmp/temp_
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
-echo "Hello"
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
+echo &quot;Hello&quot;
 exit 0
 --
-__tags__="#samples"</code></pre>
+__tags__=&quot;#samples&quot;</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -1308,7 +1307,7 @@ You can add your script to multiple categories by adding multiple tags.  E.g. <c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc"># iOS Development
+<pre class="CodeRay highlight"><code data-lang="asciidoc"># iOS Development
 :parent: mobiledev
 
 Scripts related to iOS development</code></pre>
@@ -1319,7 +1318,7 @@ Scripts related to iOS development</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc"># Android Development
+<pre class="CodeRay highlight"><code data-lang="asciidoc"># Android Development
 :parent: mobiledev
 
 Scripts related to Android development.</code></pre>
@@ -1330,7 +1329,7 @@ Scripts related to Android development.</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc"># Mobile Development
+<pre class="CodeRay highlight"><code data-lang="asciidoc"># Mobile Development
 
 This section contains content for mobile development</code></pre>
 </div>
@@ -1350,7 +1349,7 @@ This section contains content for mobile development</code></pre>
 <div class="listingblock">
 <div class="title">Adding a link that runs the <em>hello.sh</em> script directly:</div>
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">https://runScript/hello.sh[Run hello.sh script]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="asciidoc">https://runScript/hello.sh[Run hello.sh script]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1358,7 +1357,7 @@ This section contains content for mobile development</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">https://runScript/hello.sh?firstName=Steve&amp;lastName=Hannah[Run hello.sh script]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="asciidoc">https://runScript/hello.sh?firstName=Steve&amp;lastName=Hannah[Run hello.sh script]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1381,7 +1380,7 @@ This section contains content for mobile development</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash <i class="conum" data-value="1"></i><b>(1)</b>
 
 # ... Shell script source ...
 
@@ -1422,7 +1421,7 @@ exit 0 <i class="conum" data-value="2"></i><b>(2)</b>
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-toml" data-lang="toml">__title__="My Cool Script"</code></pre>
+<pre class="CodeRay highlight"><code data-lang="toml">__title__=&quot;My Cool Script&quot;</code></pre>
 </div>
 </div>
 </dd>
@@ -1432,7 +1431,7 @@ exit 0 <i class="conum" data-value="2"></i><b>(2)</b>
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-toml" data-lang="toml">__description__='''
+<pre class="CodeRay highlight"><code data-lang="toml">__description__='''
 This script does a bunch of cool things.
 
 See https://www.example.com[my website] for more usage instructions.
@@ -1446,7 +1445,7 @@ See https://www.example.com[my website] for more usage instructions.
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-toml" data-lang="toml">__doc__='''
+<pre class="CodeRay highlight"><code data-lang="toml">__doc__='''
 This script does a bunch of cool things.
 
 See https://www.example.com[my website] for more usage instructions.
@@ -1460,7 +1459,7 @@ See https://www.example.com[my website] for more usage instructions.
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-toml" data-lang="toml">__tags__="#iosdev #macdev"</code></pre>
+<pre class="CodeRay highlight"><code data-lang="toml">__tags__=&quot;#iosdev #macdev&quot;</code></pre>
 </div>
 </div>
 </dd>
@@ -1477,7 +1476,7 @@ See https://www.example.com[my website] for more usage instructions.
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-toml" data-lang="toml">label="First Name"</code></pre>
+<pre class="CodeRay highlight"><code data-lang="toml">label=&quot;First Name&quot;</code></pre>
 </div>
 </div>
 </dd>
@@ -1487,7 +1486,7 @@ See https://www.example.com[my website] for more usage instructions.
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-toml" data-lang="toml">help="This is some tooltip text"</code></pre>
+<pre class="CodeRay highlight"><code data-lang="toml">help=&quot;This is some tooltip text&quot;</code></pre>
 </div>
 </div>
 </dd>
@@ -1501,7 +1500,7 @@ See https://www.example.com[my website] for more usage instructions.
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-toml" data-lang="toml">required=true</code></pre>
+<pre class="CodeRay highlight"><code data-lang="toml">required=true</code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -1519,7 +1518,7 @@ Since this is boolean you must use <code>required=true</code>, and <em>not</em> 
 </dd>
 <dt class="hdlist1">type</dt>
 <dd>
-<p>A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", "button", and "checkbox".  If this property isn&#8217;t specified it defaults to "text".</p>
+<p>A string indicating the type of widget to use for this field in the dialog.  Possible values include "text", "file", "directory",  "button", and "checkbox".  If this property isn&#8217;t specified it defaults to "text".</p>
 </dd>
 <dt class="hdlist1">disposeOnSubmit</dt>
 <dd>
@@ -1527,9 +1526,9 @@ Since this is boolean you must use <code>required=true</code>, and <em>not</em> 
 <div class="listingblock">
 <div class="title">Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-toml" data-lang="toml">[checkServerStatus]
-    label="Check Server Status"
-    type="button"
+<pre class="CodeRay highlight"><code data-lang="toml">[checkServerStatus]
+    label=&quot;Check Server Status&quot;
+    type=&quot;button&quot;
     disposeOnSubmit=false</code></pre>
 </div>
 </div>
@@ -1545,7 +1544,7 @@ Since this is boolean you must use <code>required=true</code>, and <em>not</em> 
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-listing" data-lang="listing">Usage: shellmarks [-efhilV] [--as=&lt;targetName&gt;] [--hash=&lt;hash&gt;] [&lt;script&gt;...]
+<pre class="CodeRay highlight"><code data-lang="listing">Usage: shellmarks [-efhilV] [--as=&lt;targetName&gt;] [--hash=&lt;hash&gt;] [&lt;script&gt;...]
       [&lt;script&gt;...]       Shell scripts to be run
       --as=&lt;targetName&gt;   Alias used for the installed script
   -e, --edit              Edit the provided scripts in default text editor app
@@ -1569,20 +1568,20 @@ Since this is boolean you must use <code>required=true</code>, and <em>not</em> 
 <div class="listingblock">
 <div class="title">hello.sh</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
-echo "Hello World"</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
+echo &quot;Hello World&quot;</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Terminal</div>
 <div class="content">
-<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks hello.sh</code></pre>
+<pre class="CodeRay highlight"><code data-lang="sh">shellmarks hello.sh</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Result</div>
 <div class="content">
-<pre class="highlight"><code class="language-listing" data-lang="listing">Hello World</code></pre>
+<pre class="CodeRay highlight"><code data-lang="listing">Hello World</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1594,18 +1593,18 @@ echo "Hello World"</code></pre>
 <div class="listingblock">
 <div class="title">hello.sh</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
-echo "Hello ${name}"
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
+echo &quot;Hello ${name}&quot;
 exit 0
 ---
 [name]
-label="Please enter your first name"</code></pre>
+label=&quot;Please enter your first name&quot;</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Terminal</div>
 <div class="content">
-<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks hello.sh</code></pre>
+<pre class="CodeRay highlight"><code data-lang="sh">shellmarks hello.sh</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1614,7 +1613,7 @@ label="Please enter your first name"</code></pre>
 <div class="listingblock">
 <div class="title">Result</div>
 <div class="content">
-<pre class="highlight"><code class="language-listing" data-lang="listing">Hello Steve</code></pre>
+<pre class="CodeRay highlight"><code data-lang="listing">Hello Steve</code></pre>
 </div>
 </div>
 </div>
@@ -1625,7 +1624,7 @@ label="Please enter your first name"</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks -i --as=hello hello.sh</code></pre>
+<pre class="CodeRay highlight"><code data-lang="sh">shellmarks -i --as=hello hello.sh</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1633,7 +1632,7 @@ label="Please enter your first name"</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks hello</code></pre>
+<pre class="CodeRay highlight"><code data-lang="sh">shellmarks hello</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1646,7 +1645,7 @@ label="Please enter your first name"</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks -i https://raw.githubusercontent.com/shannah/shellmarks/master/sample-scripts/ipa-util.sh --as=ipa-util</code></pre>
+<pre class="CodeRay highlight"><code data-lang="sh">shellmarks -i https://raw.githubusercontent.com/shannah/shellmarks/master/sample-scripts/ipa-util.sh --as=ipa-util</code></pre>
 </div>
 </div>
 </div>
@@ -1658,13 +1657,13 @@ label="Please enter your first name"</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks -l</code></pre>
+<pre class="CodeRay highlight"><code data-lang="sh">shellmarks -l</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Result</div>
 <div class="content">
-<pre class="highlight"><code class="language-listing" data-lang="listing">hello
+<pre class="CodeRay highlight"><code data-lang="listing">hello
 ipa-tools
 ...etc..</code></pre>
 </div>
@@ -1680,7 +1679,7 @@ ipa-tools
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-sh" data-lang="sh">shellmarks -e hello</code></pre>
+<pre class="CodeRay highlight"><code data-lang="sh">shellmarks -e hello</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1705,7 +1704,7 @@ For scripts that include a Shellmarks GUI form, you can also edit the script by 
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2021-12-21 06:36:14 -0800
+Last updated 2022-01-24 09:34:20 -0800
 </div>
 </div>
 </body>
