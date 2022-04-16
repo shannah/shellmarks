@@ -183,4 +183,4 @@ Notable dependencies:
 
 See the [pom.xml file](pom.xml) for a full list of dependencies.
 
-jDeploy app signature: 8d775f14c0afc66a42cd71c2cfba55a37da5d6452bd29657d654acbb9f13b384
+jDeploy app signature: a68277ce4f5b15f1f374053a9ca5188d440e84fe725d2a3fcda45026c87f4127
